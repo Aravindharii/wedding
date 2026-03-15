@@ -1,0 +1,23 @@
+import { NextRequest, NextResponse } from "next/server";
+import { collection, query, where, getDocs, updateDoc, doc, serverTimestamp } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+
+export async function POST(req: NextRequest) {
+  const { slug, attending, mealPreference, plusOne, message } = await req.json();
+  if (!slug || typeof slug !== "string") {
+    return NextResponse.json({ error: "Missing guest slug" }, { status: 400 });
+  }
+
+  const snap = await getDocs(query(collection(db, "guests"), where("slug", "==", slug)));
+  if (snap.empty) return NextResponse.json({ error: "Guest not found" }, { status: 404 });
+
+  const guestDoc = snap.docs[0];
+  await updateDoc(doc(db, "guests", guestDoc.id), {
+    rsvpStatus:      attending === "yes" ? "confirmed" : "declined",
+    mealPreference,
+    plusOne:         !!plusOne,
+    message:         message || "",
+    rsvpSubmittedAt: serverTimestamp(),
+  });
+  return NextResponse.json({ success: true });
+}

@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+@theme {
+  --color-rose: #C2185B;
+  --color-gold: #D4AF37;
+  --color-ivory: #FFFFF0;
+  --color-midnight: #1a1a2e;
+  --color-champagne: #f5ebe6;
+  /* slightly warmer white */
+  --color-paper: #ffffff;
+  /* bright white top */
+  --color-ink: #3E2723;
+  /* dark coffee brown ink */
+  --color-surface: #fdfbf9;
+  /* warm white surface */
+  --color-mist: #eee6df;
+  /* light coffee mist */
+  --color-coffee-light: #e0d4cc;
+  --color-coffee-medium: #8d6e63;
+  --color-coffee-dark: #4e342e;
+
+  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-sans: var(--font-inter), sans-serif;
+
+  --animate-gradient-xy: gradient-xy 15s ease infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-delayed: float 6s ease-in-out 3s infinite;
+  --animate-shine: shine 3s infinite;
+  --animate-heartbeat: heartbeat 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-tilt: tilt 10s infinite linear;
+
+  @keyframes gradient-xy {
+
+    0%,
+    100% {
+      background-size: 400% 400%;
+      background-position: left center;
+    }
+
+    50% {
+      background-size: 200% 200%;
+      background-position: right center;
+    }
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes shine {
+    0% {
+      background-position: 200% center;
+    }
+
+    100% {
+      background-position: -200% center;
+    }
+  }
+
+  @keyframes heartbeat {
+
+    0%,
+    100% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes tilt {
+
+    0%,
+    50%,
+    100% {
+      transform: rotate(0deg);
+    }
+
+    25% {
+      transform: rotate(1deg);
+    }
+
+    75% {
+      transform: rotate(-1deg);
+    }
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+  }
+}
+
+@layer utilities {
+  .bg-mesh {
+    background-image:
+      radial-gradient(900px 500px at 20% 10%, color-mix(in oklab, var(--color-gold) 18%, transparent) 0%, transparent 60%),
+      radial-gradient(800px 450px at 80% 20%, color-mix(in oklab, var(--color-rose) 16%, transparent) 0%, transparent 55%),
+      radial-gradient(900px 600px at 50% 80%, color-mix(in oklab, var(--color-champagne) 45%, transparent) 0%, transparent 60%);
+    animation: pulse-mesh 15s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse-mesh {
+    0% {
+      filter: hue-rotate(0deg) brightness(1);
+    }
+
+    100% {
+      filter: hue-rotate(5deg) brightness(1.1);
+    }
+  }
+
+  .bg-grid-soft {
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--color-ink) 8%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--color-ink) 8%, transparent) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 100%);
+  }
+
+  .glassmorphism {
+    @apply bg-surface/40 backdrop-blur-2xl border border-white/40 shadow-[0_8px_32px_0_#1f268712];
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-gold via-[#b9901f] to-gold animate-shine bg-[length:200%_auto];
+  }
+}
