@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 interface HeroSectionProps {
   guestName?: string;
@@ -13,34 +14,49 @@ export default function HeroSection({
   desktopBg = "/back1.jpeg",
   inviteType = "both",
 }: HeroSectionProps) {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const isWedding = inviteType === "wedding";
+
+  // Preload the mobile portrait image
+  useEffect(() => {
+    const img = new Image();
+    img.src = "/portrait1.webp";
+    img.onload = () => setImageLoaded(true);
+  }, []);
+
   return (
     <section className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden py-16 px-4">
-      {/* Mobile Background */}
+      {/* Mobile Background - Portrait 1 */}
       <div
-        className="absolute inset-0 bg-cover bg-[position:35%_center] bg-no-repeat lg:hidden"
-        style={{ backgroundImage: "url('/portrait1.webp')" }}
+        className="absolute inset-0 bg-cover bg-[position:35%_center] bg-no-repeat lg:hidden transition-opacity duration-700"
+        style={{
+          backgroundImage: "url('/portrait1.webp')",
+          opacity: imageLoaded ? 1 : 0.6,
+        }}
       />
 
-      {/* Desktop Background Layers */}
+      {/* Desktop Background */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden lg:block opacity-40 blur-3xl scale-110"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden lg:block"
         style={{ backgroundImage: `url('${desktopBg}')` }}
       />
-      <div
-        className="absolute inset-0 bg-contain bg-center bg-no-repeat hidden lg:block"
-        style={{ backgroundImage: `url('${desktopBg}')` }}
-      />
 
-      {/* Dark Overlay for Readability */}
-      <div className="absolute inset-0 bg-black/55 backdrop-blur-[3px] z-0" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 z-0" />
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/60 lg:bg-black/55 backdrop-blur-[2px] z-0" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/75 z-0" />
 
-      {/* Foreground Content */}
+      {/* Loading State Overlay */}
+      {!imageLoaded && (
+        <div className="absolute inset-0 bg-black/80 z-10 flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-[#FCEABB]/30 border-t-[#FCEABB] rounded-full animate-spin" />
+        </div>
+      )}
+
+      {/* Main Content - Only fully visible after image loads */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.4, type: "spring", damping: 28 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: imageLoaded ? 1 : 0.85 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
         className="relative z-10 w-full max-w-3xl mx-auto text-center px-4 md:px-8 pb-16 pt-12 flex flex-col items-center"
       >
         {/* Names */}
@@ -65,15 +81,14 @@ export default function HeroSection({
               Exclusive Invitation
             </p>
 
-            {/* Guest Name with very slight glow */}
             <p
               className="font-serif text-3xl md:text-4xl italic tracking-wide text-[#FCEABB]"
               style={{
                 textShadow: `
-          0 0 8px rgba(252, 234, 187, 0.5),
-          0 0 15px rgba(252, 234, 187, 0.25),
-          0 2px 4px rgba(0, 0, 0, 0.6)
-        `,
+                  0 0 8px rgba(252, 234, 187, 0.5),
+                  0 0 15px rgba(252, 234, 187, 0.25),
+                  0 2px 4px rgba(0, 0, 0, 0.6)
+                `,
               }}
             >
               {guestName}
@@ -85,7 +100,6 @@ export default function HeroSection({
 
             <div className="mt-6 h-[1px] w-24 mx-auto bg-gradient-to-r from-transparent via-[#FCEABB] to-transparent opacity-60" />
 
-            {/* Very subtle background glow layer */}
             <div className="absolute inset-0 bg-[#FCEABB]/5 blur-3xl opacity-30 rounded-full -z-10" />
           </div>
         )}
@@ -140,18 +154,21 @@ export default function HeroSection({
             )}
           </p>
           <a
-            href={isWedding ? "https://share.google/govYaRqQc09cvuAoL" : "https://share.google/6hGeEEN8z4F4He5JK"}
+            href={isWedding
+              ? "https://maps.google.com/?q=Srinikethan+Auditorium+Karukachal"
+              : "https://maps.google.com/?q=Shoba+Auditorium+Thiruvankulam"
+            }
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-5 inline-block text-[#FCEABB]/80 hover:text-[#FFF5E1] transition-colors text-[10px] md:text-xs tracking-[0.2em] uppercase border-b border-[#FCEABB]/30 hover:border-[#FFF5E1]/60 pb-1"
+            className="mt-5 inline-block text-[#FCEABB]/80 hover:text-[#FFF5E1] transition-colors text-xs tracking-[0.2em] uppercase border-b border-[#FCEABB]/30 hover:border-[#FFF5E1]/60 pb-1"
           >
             Get Directions ↗
           </a>
         </div>
 
-        {/* Other Wedding Info */}
-        <div className="space-y-10 text-sm md:text-base font-light w-full max-w-lg mx-auto border-t border-white/10 pt-12">
-          {inviteType === "both" && (
+        {/* Additional Info for Both */}
+        {inviteType === "both" && (
+          <div className="space-y-10 text-sm md:text-base font-light w-full max-w-lg mx-auto border-t border-white/10 pt-12">
             <div className="space-y-2">
               <p className="text-white/60 italic mb-5 font-serif text-lg">and for dinner thereafter</p>
               <p className="text-white/90 text-xs tracking-widest uppercase mb-3 font-medium">Wedding solemnized on</p>
@@ -159,8 +176,8 @@ export default function HeroSection({
               <p className="text-white/70">at Srinikethan Auditorium,</p>
               <p className="text-white/70">Karukachal, Kerala</p>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </motion.div>
     </section>
   );
