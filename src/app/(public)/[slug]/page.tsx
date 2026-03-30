@@ -15,6 +15,7 @@ export default function GuestInvitePage() {
   const slug = Array.isArray(slugParam) ? slugParam[0] : slugParam;
 
   const [guestName, setGuestName] = useState<string | null>(null);
+  const [inviteType, setInviteType] = useState<"wedding" | "reception" | "both">("both");
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
@@ -38,10 +39,11 @@ export default function GuestInvitePage() {
       .then((snap) => {
         if (cancelled) return;
         if (snap.empty) { setNotFound(true); return; }
-        const guest = snap.docs[0]?.data() as { name?: string } | undefined;
+        const guest = snap.docs[0]?.data() as { name?: string; inviteType?: "wedding" | "reception" | "both" } | undefined;
         const name = guest?.name?.trim();
         if (!name) { setNotFound(true); return; }
         setGuestName(name);
+        setInviteType(guest?.inviteType || "both");
       })
       .catch(() => { if (!cancelled) setNotFound(true); })
       .finally(() => { if (!cancelled) setLoading(false); });
@@ -81,9 +83,9 @@ export default function GuestInvitePage() {
 
   return (
     <main className="min-h-screen">
-      <HeroSection guestName={guestName ?? undefined} />
-      <CountdownTimer />
-      <Timeline />
+      <HeroSection guestName={guestName ?? undefined} inviteType={inviteType} />
+      <Timeline inviteType={inviteType} />
+      <CountdownTimer inviteType={inviteType} />
       <RSVPForm guestSlug={slug} guestName={guestName ?? undefined} />
     </main>
   );

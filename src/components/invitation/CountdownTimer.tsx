@@ -2,11 +2,10 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-// Tuesday | 28 April 2026 11:45 am
-const WEDDING_DATE = new Date("2026-04-28T11:45:00+05:30"); // assuming IST timezone
+const WEDDING_DATE = new Date("2026-04-28T11:45:00+05:30");
 
-function getTimeLeft() {
-  const diff = WEDDING_DATE.getTime() - Date.now();
+function getTimeLeft(targetDate: Date) {
+  const diff = targetDate.getTime() - Date.now();
   if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
   return {
     days: Math.floor(diff / 86400000),
@@ -16,77 +15,79 @@ function getTimeLeft() {
   };
 }
 
-export default function CountdownTimer() {
+interface CountdownTimerProps {
+  desktopBg?: string;
+  inviteType?: "wedding" | "reception" | "both";
+}
+
+export default function CountdownTimer({
+  desktopBg = "/timer-desktop.jpg",
+  inviteType = "both",
+}: CountdownTimerProps) {
   const [time, setTime] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [mounted, setMounted] = useState(false);
 
+  // If "wedding" only, countdown to the wedding date.
+  // Otherwise, default to countdown for the reception (the grand public event).
+  const targetDate = inviteType === "wedding"
+    ? new Date("2026-04-28T11:45:00+05:30")
+    : new Date("2026-04-30T18:00:00+05:30");
+
   useEffect(() => {
     setMounted(true);
-    setTime(getTimeLeft());
-    const t = setInterval(() => setTime(getTimeLeft()), 1000);
+    setTime(getTimeLeft(targetDate));
+    const t = setInterval(() => setTime(getTimeLeft(targetDate)), 1000);
     return () => clearInterval(t);
   }, []);
 
-  if (!mounted) return <section className="py-24 bg-surface min-h-[400px]" />;
+  if (!mounted) return <section className="py-32 bg-black" />;
 
   return (
-    <section className="relative py-32 bg-surface text-ink overflow-hidden" style={{ perspective: "1000px" }}>
-      {/* Background accents */}
-      <div className="absolute inset-0 bg-mesh mix-blend-overlay opacity-60" />
-      <div className="absolute inset-0 bg-grid-soft opacity-[0.3]" />
+    <section className="relative py-32 overflow-hidden text-white">
+      {/* Mobile: Portrait 3 */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat lg:hidden"
+        style={{ backgroundImage: "url('/portrait3.jpeg')" }}
+      />
 
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
-        className="absolute top-0 right-0 w-[600px] h-[600px] bg-coffee-light/20 blur-[150px] rounded-full pointer-events-none origin-center"
+      {/* Desktop Background */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden lg:block"
+        style={{ backgroundImage: `url('${desktopBg}')` }}
       />
-      <motion.div
-        animate={{ rotate: -360 }}
-        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-        className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gold/10 blur-[150px] rounded-full pointer-events-none origin-center"
-      />
+
+      {/* Dark Tint Vibe Overlay - reduced blur, increased darkness */}
+      <div className="absolute inset-0 bg-black/75 backdrop-blur-[1px] z-0" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="mb-16"
-        >
-          <p className="text-coffee-dark tracking-[0.4em] text-sm md:text-base uppercase font-semibold">
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} className="mb-16">
+          <p className="text-white/90 tracking-[0.4em] text-xs md:text-sm uppercase font-medium">
             Counting Down To The Big Day
           </p>
-          <div className="h-px w-24 bg-gradient-to-r from-transparent via-gold/40 to-transparent mx-auto mt-6" />
+          <div className="h-px w-24 bg-gradient-to-r from-transparent via-[#FCEABB]/40 to-transparent mx-auto mt-6" />
         </motion.div>
 
         <div className="flex flex-wrap justify-center gap-6 md:gap-10">
           {Object.entries(time).map(([label, val], i) => (
-            <motion.div key={label}
-              initial={{ opacity: 0, scale: 0.8, y: 40, rotateX: 20 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.8, delay: i * 0.15, type: "spring", bounce: 0.4 }}
-              whileHover={{ scale: 1.05, rotateY: 10, rotateX: -10 }}
+            <motion.div
+              key={label}
+              initial={{ opacity: 0, scale: 0.8, y: 40 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              whileHover={{ scale: 1.05 }}
               className="relative group"
-              style={{ transformStyle: "preserve-3d" }}
             >
-              <div className="absolute -inset-[2px] bg-gradient-to-br from-gold/50 via-coffee-light/50 to-gold/50 rounded-[2rem] opacity-0 group-hover:opacity-100 blur-[2px] transition-opacity duration-500 animate-gradient-xy" />
-              <div className="absolute -inset-4 bg-gradient-to-b from-gold/20 to-coffee-light/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-              <div className="relative flex flex-col items-center justify-center w-28 h-32 md:w-36 md:h-44 glassmorphism rounded-3xl border border-white/50 group-hover:border-gold/40 transition-colors duration-500 overflow-hidden shadow-[0_20px_50px_rgba(212,175,55,0.08)]">
-                {/* Shine effect */}
-                <div className="absolute inset-0 translate-x-[-150%] rotate-45 bg-gradient-to-r from-transparent via-white/50 to-transparent group-hover:animate-shine" />
-
+              {/* Dark Tint Timer Cards - reduced massive blur to small blur, heavy dark bg */}
+              <div className="relative flex flex-col items-center justify-center w-28 h-32 md:w-36 md:h-44 bg-black/80 backdrop-blur-[4px] rounded-3xl border border-white/10 hover:border-[#FCEABB]/40 transition-all overflow-hidden shadow-2xl">
                 <motion.span
                   key={val}
-                  initial={{ opacity: 0, y: -15, scale: 0.8, filter: "blur(4px)" }}
-                  animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                  className="font-serif text-5xl md:text-7xl text-coffee-dark font-semibold tabular-nums mb-2 md:mb-3 drop-shadow-sm pt-2"
+                  initial={{ y: -10, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  className="font-serif text-6xl md:text-7xl font-light tabular-nums text-[#FFF5E1] drop-shadow-md"
                 >
                   {String(val).padStart(2, "0")}
                 </motion.span>
-                <span className="text-coffee-medium text-[10px] md:text-xs uppercase tracking-[0.2em] font-medium">
+                <span className="text-[#FCEABB]/90 text-[10px] md:text-xs uppercase tracking-[0.2em] mt-3 font-medium">
                   {label}
                 </span>
               </div>

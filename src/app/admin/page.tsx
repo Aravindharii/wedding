@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 const COLORS = ["#D4AF37", "#22c55e", "#ef4444"];
 
 export default function Dashboard() {
+
   const [guests, setGuests] = useState<Guest[]>([]);
 
   useEffect(() => {
@@ -36,9 +37,11 @@ export default function Dashboard() {
     { label: "Pending",          value: stats.pending,   color: "border-gold/50" },
     { label: "Declined",         value: stats.declined,  color: "border-rose" },
   ];
+  
 
   return (
     <div>
+      
       <h1 className="font-serif text-3xl text-ink mb-8">Dashboard</h1>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
         {cards.map((c, i) => (
@@ -61,7 +64,9 @@ export default function Dashboard() {
             <Tooltip contentStyle={{ background: "#ffffff", border: "1px solid rgba(15,18,34,0.12)", borderRadius: 10, color: "#0f1222" }} />
           </PieChart>
         </ResponsiveContainer>
+        
       </div>
     </div>
+    
   );
 }

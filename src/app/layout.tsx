@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Playfair_Display, Inter, Great_Vibes } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 
@@ -15,8 +15,15 @@ const inter = Inter({
   display: "swap",
 });
 
+const greatVibes = Great_Vibes({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-cursive",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Aravind & Partner — Wedding Invitation",
+  title: "Vishnu Surya — Wedding Invitation",
   description: "You are cordially invited to celebrate our wedding.",
 };
 
@@ -28,7 +35,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${inter.variable}`}
+      className={`${playfair.variable} ${inter.variable} ${greatVibes.variable}`}
     >
       <body className="min-h-screen bg-paper text-ink font-sans antialiased">
         {children}

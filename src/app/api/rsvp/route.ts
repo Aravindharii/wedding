@@ -3,7 +3,7 @@ import { collection, query, where, getDocs, updateDoc, doc, serverTimestamp } fr
 import { db } from "@/lib/firebase";
 
 export async function POST(req: NextRequest) {
-  const { slug, attending, mealPreference, plusOne, message } = await req.json();
+  const { slug, attending, message } = await req.json();
   if (!slug || typeof slug !== "string") {
     return NextResponse.json({ error: "Missing guest slug" }, { status: 400 });
   }
@@ -13,10 +13,8 @@ export async function POST(req: NextRequest) {
 
   const guestDoc = snap.docs[0];
   await updateDoc(doc(db, "guests", guestDoc.id), {
-    rsvpStatus:      attending === "yes" ? "confirmed" : "declined",
-    mealPreference,
-    plusOne:         !!plusOne,
-    message:         message || "",
+    rsvpStatus: attending === "yes" ? "confirmed" : "declined",
+    message: message || "",
     rsvpSubmittedAt: serverTimestamp(),
   });
   return NextResponse.json({ success: true });
