@@ -33,7 +33,7 @@ export default function HeroSection({
       />
 
       {/* Dark Overlay for Readability */}
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-[3px] z-0" />
+      <div className="absolute inset-0 bg-black/55 backdrop-blur-[3px] z-0" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 z-0" />
 
       {/* Foreground Content */}

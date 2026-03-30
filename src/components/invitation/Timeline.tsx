@@ -63,7 +63,7 @@ export default function Timeline({
       />
 
       {/* Dark Tint Vibe Overlay for readable typography without cards */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] z-0" />
+      <div className="absolute inset-0 bg-black/75 backdrop-blur-[2px] z-0" />
 
       <div className="max-w-5xl mx-auto relative z-10">
         <motion.div
