@@ -28,14 +28,14 @@ export default function HeroSection({
     <section className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden py-16 px-4 bg-black">
       {/* Mobile Background - Portrait 1 */}
       <div
-        className="absolute inset-0 bg-cover bg-[position:455%_center] bg-no-repeat lg:hidden transition-opacity duration-700"
+        className="absolute inset-0 bg-cover bg-[position:300%_center] bg-no-repeat lg:hidden transition-opacity duration-400"
         style={{
           backgroundImage: "url('/portrait1.webp')",
           opacity: imageLoaded ? 1 : 0.6,
           // ADJUST CUSTOM IMAGE SETTINGS BELOW:
           transform: "scale(1.0)", // ZOOM: e.g., "scale(1.1)" for 10% zoom. (Using scale + bg-cover ensures no unfilled spaces)
           filter: "blur(0px)",     // BLUR: e.g., "blur(2px)"
-          backgroundPosition: "50% 95%",   // FOCUS AREA: 100% Left-to-Right (Right side), 50% Top-to-Bottom (Center)
+          backgroundPosition: "47% 60%",   // FOCUS AREA: 100% Left-to-Right (Right side), 50% Top-to-Bottom (Center)
         }}
       />
 
@@ -53,7 +53,7 @@ export default function HeroSection({
       {/* Dark Overlay - ADJUST DARKNESS BY CHANGING OPACITY BELOW */}
       <div
         className="absolute inset-0 z-0 pointer-events-none bg-black"
-        style={{ opacity: 0.60 }} // DARKNESS: adjust from 0.0 (none) to 1.0 (pitch black)
+        style={{ opacity: 0.60   }} // DARKNESS: adjust from 0.0 (none) to 1.0 (pitch black)
       />
 
       {/* Vignette Gradient Overlay */}
@@ -169,8 +169,8 @@ export default function HeroSection({
           </p>
           <a
             href={isWedding
-              ? "https://maps.google.com/?q=Srinikethan+Auditorium+Karukachal"
-              : "https://maps.google.com/?q=Shoba+Auditorium+Thiruvankulam"
+              ? "https://maps.app.goo.gl/LmWf4hS1qZhDL15r8"
+              : "https://maps.app.goo.gl/6wVq2SsCkZsTsRfv9"
             }
             target="_blank"
             rel="noopener noreferrer"

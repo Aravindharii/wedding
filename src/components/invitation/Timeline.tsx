@@ -11,7 +11,7 @@ const events = [
     desc: "and for lunch thereafter",
     venue: "Srinikethan Auditorium",
     address: "Karukachal Manimala Rd, Karukachal, Kerala",
-    mapLink: "https://share.google/govYaRqQc09cvuAoL",
+    mapLink: "https://maps.app.goo.gl/LmWf4hS1qZhDL15r8",
   },
   {
     title: "Wedding Reception",
@@ -21,7 +21,7 @@ const events = [
     desc: "Join us for an evening of celebration.",
     venue: "Shoba Auditorium, Thiruvankulam",
     address: "Thiruvankulam - Chottanikkara Rd, Thrippunithura, Kerala",
-    mapLink: "https://share.google/6hGeEEN8z4F4He5JK",
+    mapLink: "https://maps.app.goo.gl/6wVq2SsCkZsTsRfv9",
   },
 ];
 
@@ -63,7 +63,7 @@ export default function Timeline({
       />
 
       {/* Dark Tint Vibe Overlay for readable typography without cards */}
-      <div className="absolute inset-0 bg-black/75 backdrop-blur-[2px] z-0" />
+      <div className="absolute inset-0 bg-black/65 backdrop-blur-[1px] z-0" />
 
       <div className="max-w-5xl mx-auto relative z-10">
         <motion.div
