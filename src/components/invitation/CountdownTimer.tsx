@@ -28,7 +28,6 @@ export default function CountdownTimer({
   const [time, setTime] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [mounted, setMounted] = useState(false);
 
-  // Choose target date based on invite type
   const targetDate = inviteType === "wedding" ? WEDDING_DATE : RECEPTION_DATE;
 
   useEffect(() => {
@@ -42,7 +41,7 @@ export default function CountdownTimer({
 
   return (
     <section className="relative py-32 overflow-hidden text-white min-h-[600px]">
-      {/* Mobile Background - Portrait 3 */}
+      {/* Mobile Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat lg:hidden"
         style={{ backgroundImage: "url('/portrait3.webp')" }}
@@ -54,10 +53,10 @@ export default function CountdownTimer({
         style={{ backgroundImage: `url('${desktopBg}')` }}
       />
 
-      {/* Dark Overlay - Non-intrusive, lets background breathe */}
+      {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/70 lg:bg-black/65 z-0" />
 
-      {/* Soft Vignette for focus */}
+      {/* Soft Vignette */}
       <div
         className="absolute inset-0 z-0"
         style={{
@@ -77,7 +76,7 @@ export default function CountdownTimer({
           <div className="h-px w-24 bg-gradient-to-r from-transparent via-[#FCEABB]/50 to-transparent mx-auto mt-6" />
         </motion.div>
 
-        {/* Timer Cards - Clean, transparent, non-interfering */}
+        {/* Timer Cards - Maximum Transparent */}
         <div className="flex flex-wrap justify-center gap-6 md:gap-10">
           {Object.entries(time).map(([label, val], i) => (
             <motion.div
@@ -89,19 +88,19 @@ export default function CountdownTimer({
               className="relative group"
             >
               <div className="relative flex flex-col items-center justify-center w-28 h-32 md:w-36 md:h-44
-                              bg-white/5 backdrop-blur-md border border-white/10
-                              hover:border-[#FCEABB]/30 rounded-3xl overflow-hidden transition-all">
+                              bg-transparent backdrop-blur-none border border-white/5
+                              hover:border-[#FCEABB]/20 rounded-3xl overflow-hidden transition-all">
 
                 <motion.span
                   key={val}
                   initial={{ y: -12, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  className="font-serif text-6xl md:text-7xl font-light tabular-nums text-white tracking-tighter"
+                  className="font-serif text-6xl md:text-7xl font-light tabular-nums text-white tracking-tighter drop-shadow-lg"
                 >
                   {String(val).padStart(2, "0")}
                 </motion.span>
 
-                <span className="text-[#FCEABB]/80 text-xs md:text-sm uppercase tracking-[0.25em] mt-3 font-medium">
+                <span className="text-[#FCEABB]/70 text-xs md:text-sm uppercase tracking-[0.25em] mt-3 font-medium">
                   {label}
                 </span>
               </div>
