@@ -25,25 +25,39 @@ export default function HeroSection({
   }, []);
 
   return (
-    <section className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden py-16 px-4">
+    <section className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden py-16 px-4 bg-black">
       {/* Mobile Background - Portrait 1 */}
       <div
-        className="absolute inset-0 bg-cover bg-[position:35%_center] bg-no-repeat lg:hidden transition-opacity duration-700"
+        className="absolute inset-0 bg-cover bg-[position:455%_center] bg-no-repeat lg:hidden transition-opacity duration-700"
         style={{
           backgroundImage: "url('/portrait1.webp')",
           opacity: imageLoaded ? 1 : 0.6,
+          // ADJUST CUSTOM IMAGE SETTINGS BELOW:
+          transform: "scale(1.0)", // ZOOM: e.g., "scale(1.1)" for 10% zoom. (Using scale + bg-cover ensures no unfilled spaces)
+          filter: "blur(0px)",     // BLUR: e.g., "blur(2px)"
+          backgroundPosition: "55% 95%",   // FOCUS AREA: 100% Left-to-Right (Right side), 50% Top-to-Bottom (Center)
         }}
       />
 
       {/* Desktop Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden lg:block"
-        style={{ backgroundImage: `url('${desktopBg}')` }}
+        style={{
+          backgroundImage: `url('${desktopBg}')`,
+          // ADJUST CUSTOM IMAGE SETTINGS BELOW:
+          transform: "scale(1.1)", // ZOOM
+          filter: "blur(0px)",     // BLUR
+        }}
       />
 
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/60 lg:bg-black/55 backdrop-blur-[2px] z-0" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/75 z-0" />
+      {/* Dark Overlay - ADJUST DARKNESS BY CHANGING OPACITY BELOW */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none bg-black"
+        style={{ opacity: 0.60 }} // DARKNESS: adjust from 0.0 (none) to 1.0 (pitch black)
+      />
+
+      {/* Vignette Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/75 z-0 pointer-events-none" />
 
       {/* Loading State Overlay */}
       {!imageLoaded && (
@@ -74,11 +88,11 @@ export default function HeroSection({
 
         {/* Guest Name Section */}
         {guestName && (
-          <div className="mt-20 pt-10 w-full max-w-sm mx-auto text-center relative">
+          <div className="mt-12 md:mt-16 w-full max-w-sm mx-auto text-center relative">
             <div className="h-[1px] w-24 mx-auto mb-6 bg-gradient-to-r from-transparent via-[#FCEABB] to-transparent opacity-60" />
 
             <p className="text-xs uppercase tracking-[0.4em] text-[#FCEABB]/90 mb-3 font-medium">
-              Exclusive Invitation
+              Exclusive Invitation For
             </p>
 
             <p
@@ -105,7 +119,7 @@ export default function HeroSection({
         )}
 
         {/* Decorative Divider */}
-        <div className="flex items-center justify-center gap-1 mb-12 opacity-60">
+        <div className="flex items-center justify-center gap-1 my-16 md:my-20 opacity-60">
           <span className="text-[#FCEABB]/50 text-[10px]">◈</span>
           <span className="text-[#FCEABB]/50 text-xs">◈</span>
           <span className="text-[#FCEABB]/50 text-[10px]">◈</span>

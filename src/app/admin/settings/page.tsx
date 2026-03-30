@@ -21,11 +21,11 @@ export default function SettingsPage() {
   return (
     <div className="max-w-2xl">
       <h1 className="font-serif text-3xl text-ink mb-8">Settings</h1>
-      <div className="bg-surface/80 backdrop-blur rounded-2xl p-8 border border-ink/10 space-y-5 shadow-[0_20px_70px_rgba(15,18,34,0.10)]">
+      <div className="bg-surface/80 backdrop-blur rounded-2xl p-5 sm:p-8 border border-ink/10 space-y-5 shadow-[0_20px_70px_rgba(15,18,34,0.10)]">
         {[
           { key: "coupleNames", label: "Couple Names" },
           { key: "weddingDate", label: "Wedding Date", type: "date" },
-          { key: "venue",       label: "Venue" },
+          { key: "venue", label: "Venue" },
           { key: "venueMapUrl", label: "Google Maps URL" },
         ].map(f => (
           <div key={f.key}>

@@ -4,21 +4,23 @@ import { collection, getDocs, addDoc, deleteDoc, doc, serverTimestamp, query, wh
 import { db } from "@/lib/firebase";
 import { Guest } from "@/lib/types";
 import { toast } from "sonner";
-import { Trash2, Plus, Download, Link as LinkIcon } from "lucide-react";
+import { Trash2, Plus, Download, Link as LinkIcon, Copy, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function GuestsPage() {
   const [guests, setGuests] = useState<Guest[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
+  const [showLinkModal, setShowLinkModal] = useState(false);
+  const [newGuestLink, setNewGuestLink] = useState("");
+  const [newGuestName, setNewGuestName] = useState("");
+  const [copied, setCopied] = useState(false);
+
   const [form, setForm] = useState({
     name: "",
-    email: "",
-    phone: "",
-    tableNumber: "",
     inviteType: "both" as "both" | "wedding" | "reception"
   });
+
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"all" | "pending" | "confirmed" | "declined">("all");
 
@@ -32,21 +34,13 @@ export default function GuestsPage() {
     fetchGuests();
   }, []);
 
-  // Auto-hide success message after 4 seconds
-  useEffect(() => {
-    if (successMessage) {
-      const timer = setTimeout(() => setSuccessMessage(""), 4000);
-      return () => clearTimeout(timer);
-    }
-  }, [successMessage]);
-
   const addGuest = async () => {
     if (!form.name.trim()) {
       toast.error("Name is required");
       return;
     }
 
-    // Auto-generate unique slug
+    // Generate unique slug
     let baseSlug = form.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
     let slug = baseSlug;
     let counter = 1;
@@ -61,9 +55,6 @@ export default function GuestsPage() {
 
     await addDoc(collection(db, "guests"), {
       name: form.name.trim(),
-      ...(form.email.trim() ? { email: form.email.trim() } : {}),
-      ...(form.phone.trim() ? { phone: form.phone.trim() } : {}),
-      tableNumber: Number(form.tableNumber) || null,
       slug,
       inviteType: form.inviteType,
       rsvpStatus: "pending",
@@ -72,10 +63,28 @@ export default function GuestsPage() {
       createdAt: serverTimestamp(),
     });
 
-    setSuccessMessage(`✅ ${form.name} has been added successfully!`);
+    // Show personalized link popup
+    const inviteUrl = `${window.location.origin}/${slug}`;
+    setNewGuestLink(inviteUrl);
+    setNewGuestName(form.name.trim());
+    setShowLinkModal(true);
+
+    // Reset form
     setShowModal(false);
-    setForm({ name: "", email: "", phone: "", tableNumber: "", inviteType: "both" });
+    setForm({ name: "", inviteType: "both" });
     fetchGuests();
+  };
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(newGuestLink);
+      setCopied(true);
+      toast.success("Invite link copied!");
+
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.error("Failed to copy link");
+    }
   };
 
   const deleteGuest = async (id: string) => {
@@ -87,16 +96,8 @@ export default function GuestsPage() {
 
   const exportCSV = () => {
     const rows = [
-      ["Name", "Email", "Phone", "Table", "Invite Type", "URL Slug", "RSVP Status"],
-      ...guests.map(g => [
-        g.name,
-        g.email || "",
-        g.phone || "",
-        g.tableNumber || "",
-        g.inviteType || "both",
-        g.slug,
-        g.rsvpStatus
-      ]),
+      ["Name", "Invite Type", "URL Slug", "RSVP Status"],
+      ...guests.map(g => [g.name, g.inviteType || "both", g.slug, g.rsvpStatus]),
     ];
     const csv = rows.map(r => r.join(",")).join("\n");
     const a = document.createElement("a");
@@ -108,32 +109,14 @@ export default function GuestsPage() {
 
   const filteredGuests = guests
     .filter(g => filter === "all" || g.rsvpStatus === filter)
-    .filter(g =>
-      g.name.toLowerCase().includes(search.toLowerCase()) ||
-      (g.email || "").toLowerCase().includes(search.toLowerCase())
-    );
+    .filter(g => g.name.toLowerCase().includes(search.toLowerCase()));
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
-      {/* Success Message Banner */}
-      <AnimatePresence>
-        {successMessage && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="mb-6 bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 px-6 py-4 rounded-2xl flex items-center gap-3"
-          >
-            <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-            {successMessage}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
+    <div className="p-6 max-w-6xl mx-auto">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <h1 className="font-serif text-4xl text-ink">Guests Management</h1>
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           <button
             onClick={exportCSV}
             className="flex items-center gap-2 px-5 py-2.5 text-sm border border-ink/20 rounded-xl hover:border-gold/50 hover:bg-ink/5 transition-colors"
@@ -154,7 +137,7 @@ export default function GuestsPage() {
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search by name or email..."
+          placeholder="Search by name..."
           className="bg-surface border border-ink/10 rounded-xl px-5 py-3 text-ink flex-1 focus:outline-none focus:border-gold/60 placeholder:text-ink/40"
         />
         <select
@@ -174,29 +157,20 @@ export default function GuestsPage() {
         <table className="w-full text-sm">
           <thead className="border-b border-ink/10 bg-ink/5">
             <tr className="text-ink/60 text-left">
-              {["Name", "Email", "Invite URL", "Type", "Table", "Status", "Actions"].map((h) => (
+              {["Name", "Invite URL", "Type", "Status", "Actions"].map((h) => (
                 <th key={h} className="px-6 py-4 font-medium">{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {loading ? (
-              <tr>
-                <td colSpan={7} className="text-center py-16 text-ink/50">
-                  Loading guests...
-                </td>
-              </tr>
+              <tr><td colSpan={5} className="text-center py-16 text-ink/50">Loading guests...</td></tr>
             ) : filteredGuests.length === 0 ? (
-              <tr>
-                <td colSpan={7} className="text-center py-16 text-ink/50">
-                  No guests found
-                </td>
-              </tr>
+              <tr><td colSpan={5} className="text-center py-16 text-ink/50">No guests found</td></tr>
             ) : (
               filteredGuests.map((g) => (
                 <tr key={g.id} className="border-b border-ink/10 hover:bg-ink/5 transition-colors">
                   <td className="px-6 py-4 font-medium text-ink">{g.name}</td>
-                  <td className="px-6 py-4 text-ink/70">{g.email || "—"}</td>
                   <td className="px-6 py-4 font-mono text-xs">
                     <a
                       href={`/${g.slug}`}
@@ -209,17 +183,11 @@ export default function GuestsPage() {
                     </a>
                   </td>
                   <td className="px-6 py-4 text-ink/70 capitalize">{g.inviteType || "both"}</td>
-                  <td className="px-6 py-4 text-ink/70">{g.tableNumber || "—"}</td>
                   <td className="px-6 py-4">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium capitalize
-                        ${g.rsvpStatus === "confirmed"
-                          ? "bg-green-100 text-green-700"
-                          : g.rsvpStatus === "declined"
-                            ? "bg-red-100 text-red-700"
-                            : "bg-amber-100 text-amber-700"
-                        }`}
-                    >
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium capitalize
+                      ${g.rsvpStatus === "confirmed" ? "bg-green-100 text-green-700" :
+                        g.rsvpStatus === "declined" ? "bg-red-100 text-red-700" :
+                          "bg-amber-100 text-amber-700"}`}>
                       {g.rsvpStatus}
                     </span>
                   </td>
@@ -255,24 +223,6 @@ export default function GuestsPage() {
                 onChange={(e) => setForm(p => ({ ...p, name: e.target.value }))}
                 className="w-full bg-paper border border-ink/10 rounded-2xl px-5 py-3.5 focus:outline-none focus:border-gold"
               />
-              <input
-                placeholder="Email (optional)"
-                value={form.email}
-                onChange={(e) => setForm(p => ({ ...p, email: e.target.value }))}
-                className="w-full bg-paper border border-ink/10 rounded-2xl px-5 py-3.5 focus:outline-none focus:border-gold"
-              />
-              <input
-                placeholder="Phone (optional)"
-                value={form.phone}
-                onChange={(e) => setForm(p => ({ ...p, phone: e.target.value }))}
-                className="w-full bg-paper border border-ink/10 rounded-2xl px-5 py-3.5 focus:outline-none focus:border-gold"
-              />
-              <input
-                placeholder="Table Number (optional)"
-                value={form.tableNumber}
-                onChange={(e) => setForm(p => ({ ...p, tableNumber: e.target.value }))}
-                className="w-full bg-paper border border-ink/10 rounded-2xl px-5 py-3.5 focus:outline-none focus:border-gold"
-              />
 
               <select
                 value={form.inviteType}
@@ -302,6 +252,64 @@ export default function GuestsPage() {
           </motion.div>
         </div>
       )}
+
+      {/* Personalized Invite Link Popup */}
+      <AnimatePresence>
+        {showLinkModal && (
+          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[60] p-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="bg-surface/95 backdrop-blur-2xl rounded-3xl p-8 w-full max-w-md border border-gold/20 shadow-2xl text-center"
+            >
+              <div className="mx-auto w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-6">
+                <Check className="w-8 h-8 text-emerald-600" />
+              </div>
+
+              <h2 className="text-2xl font-serif text-ink mb-2">Guest Added Successfully!</h2>
+              <p className="text-ink/70 mb-6">
+                {newGuestName} has been added.
+              </p>
+
+              <div className="bg-zinc-900/70 rounded-2xl p-5 mb-8 text-left">
+                <p className="text-xs uppercase tracking-widest text-ink/60 mb-2">Personalized Invite Link</p>
+                <div className="flex items-center gap-3 bg-black/50 rounded-xl p-4 text-sm font-mono text-[#FCEABB] break-all">
+                  {newGuestLink}
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={copyToClipboard}
+                  className="flex items-center justify-center gap-3 bg-gradient-to-b from-gold to-[#b9901f] text-ink font-medium py-4 rounded-2xl hover:brightness-105 transition"
+                >
+                  {copied ? "✓ Link Copied!" : (
+                    <>
+                      <Copy size={18} /> Copy Invite Link
+                    </>
+                  )}
+                </button>
+
+                <button
+                  onClick={() => {
+                    setShowLinkModal(false);
+                    setNewGuestLink("");
+                    setNewGuestName("");
+                  }}
+                  className="py-3 text-ink/70 hover:text-ink transition"
+                >
+                  Close
+                </button>
+              </div>
+
+              <p className="text-xs text-ink/50 mt-6">
+                Share this link with the guest for their personalized invitation
+              </p>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
