@@ -35,7 +35,7 @@ export default function HeroSection({
           // ADJUST CUSTOM IMAGE SETTINGS BELOW:
           transform: "scale(1.0)", // ZOOM: e.g., "scale(1.1)" for 10% zoom. (Using scale + bg-cover ensures no unfilled spaces)
           filter: "blur(0px)",     // BLUR: e.g., "blur(2px)"
-          backgroundPosition: "55% 95%",   // FOCUS AREA: 100% Left-to-Right (Right side), 50% Top-to-Bottom (Center)
+          backgroundPosition: "50% 95%",   // FOCUS AREA: 100% Left-to-Right (Right side), 50% Top-to-Bottom (Center)
         }}
       />
 

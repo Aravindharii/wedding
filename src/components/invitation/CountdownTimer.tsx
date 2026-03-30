@@ -88,8 +88,8 @@ export default function CountdownTimer({
               whileHover={{ scale: 1.04 }}
               className="relative group"
             >
-              <div className="relative flex flex-col items-center justify-center w-28 h-32 md:w-36 md:h-44 
-                              bg-black/60 backdrop-blur-md border border-white/10 
+              <div className="relative flex flex-col items-center justify-center w-28 h-32 md:w-36 md:h-44
+                              bg-white/5 backdrop-blur-md border border-white/10
                               hover:border-[#FCEABB]/30 rounded-3xl overflow-hidden transition-all">
 
                 <motion.span
