@@ -86,11 +86,11 @@ export default function RSVPForm({
         >
           <h2 className="font-serif text-5xl md:text-6xl text-[#FFF5E1] mb-4">RSVP</h2>
           {guestName && (
-            <p className="text-[#FCEABB]/80 text-sm md:text-base tracking-wide">
+            <p className="text-[#FCEABB] text-sm md:text-base tracking-wide font-medium">
               Dear {guestName},
             </p>
           )}
-          <p className="text-white/70 mt-2 text-sm">Please let us know if you can join us</p>
+          <p className="text-white/90 mt-2 text-sm font-medium">Please let us know if you can join us</p>
         </motion.div>
 
         <AnimatePresence mode="wait">
@@ -134,7 +134,7 @@ export default function RSVPForm({
             >
               {/* Attendance Selection */}
               <div>
-                <label className="block text-[#FCEABB]/80 text-xs uppercase tracking-widest mb-4 pl-1">
+                <label className="block text-[#FCEABB] text-xs uppercase tracking-widest mb-4 pl-1 font-medium">
                   Will you be attending?
                 </label>
                 <div className="grid grid-cols-2 gap-4">
@@ -142,8 +142,8 @@ export default function RSVPForm({
                     type="button"
                     onClick={() => handleAttendingSelect("yes")}
                     className={`py-5 px-6 rounded-2xl font-medium transition-all flex items-center justify-center gap-3 ${attending === "yes"
-                        ? "bg-[#FCEABB] text-black shadow-lg"
-                        : "bg-white/10 hover:bg-white/15 border border-white/20 text-white"
+                      ? "bg-[#FCEABB] text-black shadow-lg"
+                      : "bg-white/10 hover:bg-white/15 border border-white/20 text-white"
                       }`}
                   >
                     <CalendarCheck className="w-5 h-5" />
@@ -154,8 +154,8 @@ export default function RSVPForm({
                     type="button"
                     onClick={() => handleAttendingSelect("no")}
                     className={`py-5 px-6 rounded-2xl font-medium transition-all flex items-center justify-center gap-3 ${attending === "no"
-                        ? "bg-red-600 text-white shadow-lg"
-                        : "bg-white/10 hover:bg-white/15 border border-white/20 text-white"
+                      ? "bg-red-600 text-white shadow-lg"
+                      : "bg-white/10 hover:bg-white/15 border border-white/20 text-white"
                       }`}
                   >
                     <CalendarX className="w-5 h-5" />
@@ -171,8 +171,8 @@ export default function RSVPForm({
                 whileHover={{ scale: attending ? 1.02 : 1 }}
                 whileTap={{ scale: attending ? 0.97 : 1 }}
                 className={`w-full py-5 rounded-2xl font-semibold tracking-wider uppercase flex items-center justify-center gap-3 transition-all ${attending
-                    ? "bg-gradient-to-r from-[#FCEABB] to-amber-500 text-black shadow-lg hover:shadow-xl"
-                    : "bg-white/10 text-white/50 cursor-not-allowed"
+                  ? "bg-gradient-to-r from-[#FCEABB] to-amber-500 text-black shadow-lg hover:shadow-xl"
+                  : "bg-white/10 text-white/50 cursor-not-allowed"
                   }`}
               >
                 {isSubmitting ? (
@@ -185,7 +185,7 @@ export default function RSVPForm({
               </motion.button>
 
               {!attending && (
-                <p className="text-center text-white/50 text-xs">
+                <p className="text-center text-white/80 text-xs font-medium">
                   Please select Yes or No to continue
                 </p>
               )}

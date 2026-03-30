@@ -32,7 +32,7 @@ export default function Navbar() {
         </a>
 
         <div
-          className={`flex items-center gap-2 text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.25em] uppercase transition-all duration-500 ${isScrolled ? "text-ink/80 gap-3 md:gap-8" : "text-white/85 gap-6 md:gap-12"
+          className={`flex items-center gap-2 text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.25em] uppercase transition-all duration-500 font-medium ${isScrolled ? "text-ink/80 gap-3 md:gap-8" : "text-white gap-6 md:gap-12"
             }`}
         >
           {["Schedule"].map(item => (
