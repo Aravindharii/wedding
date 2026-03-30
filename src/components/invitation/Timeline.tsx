@@ -53,7 +53,7 @@ export default function Timeline({
       {/* Mobile: Portrait 2 - custom positioning */}
       <div
         className="absolute inset-0 bg-cover bg-[position:25%_center] bg-no-repeat lg:hidden"
-        style={{ backgroundImage: "url('/portrait2.jpeg')" }}
+        style={{ backgroundImage: "url('/portrait2.webp')" }}
       />
 
       {/* Desktop Background */}

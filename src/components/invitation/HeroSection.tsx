@@ -19,7 +19,7 @@ export default function HeroSection({
       {/* Mobile Background */}
       <div
         className="absolute inset-0 bg-cover bg-[position:35%_center] bg-no-repeat lg:hidden"
-        style={{ backgroundImage: "url('/portrait1.jpeg')" }}
+        style={{ backgroundImage: "url('/portrait1.webp')" }}
       />
 
       {/* Desktop Background Layers */}

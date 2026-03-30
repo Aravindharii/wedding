@@ -47,7 +47,7 @@ export default function CountdownTimer({
       {/* Mobile: Portrait 3 */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat lg:hidden"
-        style={{ backgroundImage: "url('/portrait3.jpeg')" }}
+        style={{ backgroundImage: "url('/portrait3.webp')" }}
       />
 
       {/* Desktop Background */}
