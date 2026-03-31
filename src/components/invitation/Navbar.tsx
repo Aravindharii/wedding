@@ -1,6 +1,7 @@
 "use client";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Navbar() {
   const { scrollY } = useScroll();
@@ -21,33 +22,58 @@ export default function Navbar() {
           : "bg-transparent px-4 md:px-8 py-4 md:py-6 w-full max-w-7xl"
           }`}
       >
-        <a
-          href="#"
+        <Link
+          href="/"
           className={`font-serif text-2xl md:text-3xl tracking-wider group flex-shrink-0 ${isScrolled ? "text-ink drop-shadow-sm" : "text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.45)]"
             }`}
         >
           <span className={`transition-all duration-500 font-semibold ${isScrolled ? "text-ink" : "text-white"}`}>Vishnu</span>
           <span className="text-gold italic mx-1.5 md:mx-2 drop-shadow-sm">&</span>
           <span className={`transition-all duration-500 font-semibold ${isScrolled ? "text-ink" : "text-white"}`}>Surya</span>
-        </a>
+        </Link>
 
         <div
           className={`flex items-center gap-2 text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.25em] uppercase transition-all duration-500 font-medium ${isScrolled ? "text-ink/80 gap-3 md:gap-8" : "text-white gap-6 md:gap-12"
             }`}
         >
-          {["Schedule"].map(item => (
-            <a key={item} href={`#${item.toLowerCase()}`}
-              className="group relative px-3 py-2 hover:text-white transition-colors duration-300 rounded-full"
-            >
-              {isScrolled && (
-                <span className="absolute inset-0 bg-gold/10 rounded-full scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300" />
-              )}
-              <span className="relative z-10 font-semibold">{item}</span>
-              {!isScrolled && (
-                <span className="absolute bottom-0 left-1/2 w-0 h-[2px] bg-gradient-to-r from-gold to-white/50 -translate-x-1/2 group-hover:w-[calc(100%-16px)] transition-all duration-300 rounded-full" />
-              )}
-            </a>
-          ))}
+          {/* <Link
+            href="/wedding"
+            className="group relative px-3 py-2 hover:text-white transition-colors duration-300 rounded-full"
+          >
+            {isScrolled && (
+              <span className="absolute inset-0 bg-gold/10 rounded-full scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300" />
+            )}
+            <span className="relative z-10 font-semibold">Wedding</span>
+            {!isScrolled && (
+              <span className="absolute bottom-0 left-1/2 w-0 h-[2px] bg-gradient-to-r from-gold to-white/50 -translate-x-1/2 group-hover:w-[calc(100%-16px)] transition-all duration-300 rounded-full" />
+            )}
+          </Link>
+
+          <Link
+            href="/reception"
+            className="group relative px-3 py-2 hover:text-white transition-colors duration-300 rounded-full"
+          >
+            {isScrolled && (
+              <span className="absolute inset-0 bg-gold/10 rounded-full scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300" />
+            )}
+            <span className="relative z-10 font-semibold">Reception</span>
+            {!isScrolled && (
+              <span className="absolute bottom-0 left-1/2 w-0 h-[2px] bg-gradient-to-r from-gold to-white/50 -translate-x-1/2 group-hover:w-[calc(100%-16px)] transition-all duration-300 rounded-full" />
+            )}
+          </Link> */}
+
+          <a
+            href="#schedule"
+            className="group relative px-3 py-2 hover:text-white transition-colors duration-300 rounded-full"
+          >
+            {isScrolled && (
+              <span className="absolute inset-0 bg-gold/10 rounded-full scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300" />
+            )}
+            <span className="relative z-10 font-semibold">Schedule</span>
+            {!isScrolled && (
+              <span className="absolute bottom-0 left-1/2 w-0 h-[2px] bg-gradient-to-r from-gold to-white/50 -translate-x-1/2 group-hover:w-[calc(100%-16px)] transition-all duration-300 rounded-full" />
+            )}
+          </a>
         </div>
       </motion.nav>
     </div>
