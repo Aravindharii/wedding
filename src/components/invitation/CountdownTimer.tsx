@@ -22,7 +22,7 @@ interface CountdownTimerProps {
 }
 
 export default function CountdownTimer({
-  desktopBg = "/timer-desktop.jpg",
+  desktopBg = "/portrait5.webp",
   inviteType = "both",
 }: CountdownTimerProps) {
   const [time, setTime] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });

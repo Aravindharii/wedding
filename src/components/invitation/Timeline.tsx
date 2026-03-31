@@ -31,7 +31,7 @@ interface TimelineProps {
 }
 
 export default function Timeline({
-  desktopBg = "/timeline-desktop.jpg",
+  desktopBg = "/portrait2.webp",
   inviteType = "both",
 }: TimelineProps) {
   const containerRef = useRef<HTMLDivElement>(null);
