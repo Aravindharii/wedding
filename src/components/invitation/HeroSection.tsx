@@ -91,9 +91,9 @@ export default function HeroSection({
           <div className="mt-12 md:mt-16 w-full max-w-sm mx-auto text-center relative">
             <div className="h-[1px] w-24 mx-auto mb-6 bg-gradient-to-r from-transparent via-[#FCEABB] to-transparent opacity-60" />
 
-            <p className="text-xs uppercase tracking-[0.4em] text-[#FCEABB]/90 mb-3 font-medium">
+            {/* <p className="text-xs uppercase tracking-[0.4em] text-[#FCEABB]/90 mb-3 font-medium">
               Exclusive Invitation For
-            </p>
+            </p> */}
 
             <p
               className="font-serif text-3xl md:text-4xl italic tracking-wide text-[#FCEABB]"
