@@ -14,6 +14,7 @@ export default function GuestsPage() {
   const [showLinkModal, setShowLinkModal] = useState(false);
   const [newGuestLink, setNewGuestLink] = useState("");
   const [newGuestName, setNewGuestName] = useState("");
+  const [newGuestType, setNewGuestType] = useState<"both" | "wedding" | "reception">("both");
   const [copied, setCopied] = useState(false);
 
   const [form, setForm] = useState({
@@ -67,6 +68,7 @@ export default function GuestsPage() {
     const inviteUrl = `${window.location.origin}/${slug}`;
     setNewGuestLink(inviteUrl);
     setNewGuestName(form.name.trim());
+    setNewGuestType(form.inviteType);
     setShowLinkModal(true);
 
     // Reset form
@@ -76,8 +78,21 @@ export default function GuestsPage() {
   };
 
   const copyToClipboard = async () => {
+    let dateStr = "28th & 30th April 2026";
+    if (newGuestType === "wedding") dateStr = "28th April 2026";
+    if (newGuestType === "reception") dateStr = "30th April 2026";
+
+    const textToCopy = `Dear ${newGuestName},
+
+We are delighted to invite you to celebrate with us on ${dateStr}
+
+Your presence will truly make our day even more special. We kindly request you to mark your presence using the link below:
+${newGuestLink}
+
+We look forward to celebrating this joyous occasion together.`;
+
     try {
-      await navigator.clipboard.writeText(newGuestLink);
+      await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
       toast.success("Invite link copied!");
 
@@ -296,6 +311,7 @@ export default function GuestsPage() {
                     setShowLinkModal(false);
                     setNewGuestLink("");
                     setNewGuestName("");
+                    setNewGuestType("both");
                   }}
                   className="py-3 text-ink/70 hover:text-ink transition"
                 >
