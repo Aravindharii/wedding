@@ -104,7 +104,7 @@ We look forward to celebrating this joyous occasion together.`;
 
   const deleteGuest = async (id: string) => {
     if (!confirm("Are you sure you want to delete this guest?")) return;
-    await deleteDoc(doc(db, "guests", id));
+    await deleteDoc(doc(db, "guests_jismon_sanu", id));
     toast.success("Guest removed");
     fetchGuests();
   };
