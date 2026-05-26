@@ -27,9 +27,9 @@ export default function Navbar() {
           className={`font-serif text-2xl md:text-3xl tracking-wider group flex-shrink-0 ${isScrolled ? "text-ink drop-shadow-sm" : "text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.45)]"
             }`}
         >
-          <span className={`transition-all duration-500 font-semibold ${isScrolled ? "text-ink" : "text-white"}`}>Vishnu</span>
-          <span className="text-gold italic mx-1.5 md:mx-2 drop-shadow-sm">&</span>
-          <span className={`transition-all duration-500 font-semibold ${isScrolled ? "text-ink" : "text-white"}`}>Surya</span>
+          <span className={`transition-all duration-500 font-semibold ${isScrolled ? "text-ink" : "text-white"}`}>Jismon</span>
+          <span className={`mx-2 text-gold italic font-serif transition-opacity duration-500 ${isScrolled ? "opacity-100" : "opacity-80"}`}>&amp;</span>
+          <span className={`transition-all duration-500 font-semibold ${isScrolled ? "text-ink" : "text-white"}`}>Sanu</span>
         </Link>
 
         <div

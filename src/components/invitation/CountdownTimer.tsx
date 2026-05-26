@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-const WEDDING_DATE = new Date("2026-04-28T11:45:00+05:30");
-const RECEPTION_DATE = new Date("2026-04-30T18:00:00+05:30");
+const WEDDING_DATE = new Date("2026-06-14T15:00:00+05:30");
+const RECEPTION_DATE = new Date("2026-06-06T18:30:00+05:30");
 
 function getTimeLeft(targetDate: Date) {
   const diff = targetDate.getTime() - Date.now();
@@ -18,17 +18,17 @@ function getTimeLeft(targetDate: Date) {
 
 interface CountdownTimerProps {
   desktopBg?: string;
-  inviteType?: "wedding" | "reception" | "both";
+  inviteType?: "wedding" | "both-receptions" | "wedding-reception";
 }
 
 export default function CountdownTimer({
-  desktopBg = "/portrait5.webp",
-  inviteType = "both",
+  desktopBg = "/sanu3.jpeg",
+  inviteType = "both-receptions",
 }: CountdownTimerProps) {
   const [time, setTime] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [mounted, setMounted] = useState(false);
 
-  const targetDate = inviteType === "wedding" ? WEDDING_DATE : RECEPTION_DATE;
+  const targetDate = inviteType === "wedding" ? WEDDING_DATE : inviteType === "wedding-reception" ? WEDDING_DATE : RECEPTION_DATE;
 
   useEffect(() => {
     setMounted(true);
@@ -44,13 +44,13 @@ export default function CountdownTimer({
       {/* Mobile Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat lg:hidden"
-        style={{ backgroundImage: "url('/portrait3.webp')" }}
+        style={{ backgroundImage: "url('/sanu3.jpeg')", filter: "grayscale(100%) blur(2px)", transform: "scale(1.05)" }}
       />
 
       {/* Desktop Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden lg:block"
-        style={{ backgroundImage: `url('${desktopBg}')` }}
+        style={{ backgroundImage: `url('${desktopBg}')`, filter: "grayscale(100%) blur(2px)", transform: "scale(1.05)" }}
       />
 
       {/* Dark Overlay */}

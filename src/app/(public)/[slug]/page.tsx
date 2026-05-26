@@ -15,7 +15,7 @@ export default function GuestInvitePage() {
   const slug = Array.isArray(slugParam) ? slugParam[0] : slugParam;
 
   const [guestName, setGuestName] = useState<string | null>(null);
-  const [inviteType, setInviteType] = useState<"wedding" | "reception" | "both">("both");
+  const [inviteType, setInviteType] = useState<"wedding" | "both-receptions" | "wedding-reception">("both-receptions");
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
@@ -35,15 +35,15 @@ export default function GuestInvitePage() {
       };
     }
 
-    getDocs(query(collection(db, "guests"), where("slug", "==", slug)))
+    getDocs(query(collection(db, "guests_jismon_sanu"), where("slug", "==", slug)))
       .then((snap) => {
         if (cancelled) return;
         if (snap.empty) { setNotFound(true); return; }
-        const guest = snap.docs[0]?.data() as { name?: string; inviteType?: "wedding" | "reception" | "both" } | undefined;
+        const guest = snap.docs[0]?.data() as { name?: string; inviteType?: "wedding" | "both-receptions" | "wedding-reception" } | undefined;
         const name = guest?.name?.trim();
         if (!name) { setNotFound(true); return; }
         setGuestName(name);
-        setInviteType(guest?.inviteType || "both");
+        setInviteType(guest?.inviteType || "both-receptions");
       })
       .catch(() => { if (!cancelled) setNotFound(true); })
       .finally(() => { if (!cancelled) setLoading(false); });

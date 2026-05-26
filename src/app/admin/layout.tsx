@@ -31,7 +31,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Mobile Top Bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-surface/95 backdrop-blur-xl border-b border-ink/10 flex items-center justify-between px-4 z-40">
         <div>
-          <p className="font-serif text-ink text-lg">Vishnu &amp; Surya</p>
+          <p className="font-serif text-ink text-lg">Jismon &amp; Sanu</p>
         </div>
         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 text-ink/70 hover:text-ink">
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -58,7 +58,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       `}>
         <div className="mb-10 px-2 flex justify-between items-start">
           <div>
-            <p className="font-serif text-ink text-xl">Vishnu &amp; Surya</p>
+            <p className="font-serif text-ink text-xl">Jismon &amp; Sanu</p>
             <p className="text-ink/50 text-xs mt-1 tracking-widest uppercase">Admin Panel</p>
           </div>
           <button onClick={closeMobileMenu} className="md:hidden p-1 text-ink/50 hover:text-ink -mr-2">

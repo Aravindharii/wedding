@@ -6,21 +6,23 @@ import { useState, useEffect } from "react";
 interface HeroSectionProps {
   guestName?: string;
   desktopBg?: string;
-  inviteType?: "wedding" | "reception" | "both";
+  inviteType?: "wedding" | "both-receptions" | "wedding-reception";
 }
 
 export default function HeroSection({
   guestName,
-  desktopBg = "/back1.jpeg",
-  inviteType = "both",
+  desktopBg = "/sanu1.jpeg",
+  inviteType = "both-receptions",
 }: HeroSectionProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const isWedding = inviteType === "wedding";
+  const isEngagement = inviteType === "both-receptions"; // Show engagement reception details for both
+
 
   // Preload the mobile portrait image
   useEffect(() => {
     const img = new Image();
-    img.src = "/portrait1.webp";
+    img.src = "/sanu1.jpeg";
     img.onload = () => setImageLoaded(true);
   }, []);
 
@@ -30,11 +32,11 @@ export default function HeroSection({
       <div
         className="absolute inset-0 bg-cover bg-[position:300%_center] bg-no-repeat lg:hidden transition-opacity duration-400"
         style={{
-          backgroundImage: "url('/portrait1.webp')",
+          backgroundImage: "url('/sanu1.jpeg')",
           opacity: imageLoaded ? 1 : 0.6,
           // ADJUST CUSTOM IMAGE SETTINGS BELOW:
           transform: "scale(1.0)", // ZOOM: e.g., "scale(1.1)" for 10% zoom. (Using scale + bg-cover ensures no unfilled spaces)
-          filter: "blur(0px)",     // BLUR: e.g., "blur(2px)"
+          filter: "grayscale(100%) blur(2px)",     // BLUR: e.g., "blur(2px)"
           backgroundPosition: "47% 60%",   // FOCUS AREA: 100% Left-to-Right (Right side), 50% Top-to-Bottom (Center)
         }}
       />
@@ -46,14 +48,14 @@ export default function HeroSection({
           backgroundImage: `url('${desktopBg}')`,
           // ADJUST CUSTOM IMAGE SETTINGS BELOW:
           transform: "scale(1.1)", // ZOOM
-          filter: "blur(0px)",     // BLUR
+          filter: "grayscale(100%) blur(2px)",     // BLUR
         }}
       />
 
       {/* Dark Overlay - ADJUST DARKNESS BY CHANGING OPACITY BELOW */}
       <div
         className="absolute inset-0 z-0 pointer-events-none bg-black"
-        style={{ opacity: 0.60   }} // DARKNESS: adjust from 0.0 (none) to 1.0 (pitch black)
+        style={{ opacity: 0.60 }} // DARKNESS: adjust from 0.0 (none) to 1.0 (pitch black)
       />
 
       {/* Vignette Gradient Overlay */}
@@ -73,16 +75,15 @@ export default function HeroSection({
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="relative z-10 w-full max-w-3xl mx-auto text-center px-4 md:px-8 pb-16 pt-12 flex flex-col items-center"
       >
-        {/* Names */}
         <div className="py-8 flex flex-col items-center justify-center w-full">
           <h1 className="font-['var(--font-cursive)',serif] text-7xl sm:text-8xl md:text-9xl text-[#FFF5E1] font-normal tracking-wide drop-shadow-2xl">
-            Vishnu
+            Jismon
           </h1>
           <span className="font-serif text-3xl md:text-5xl text-[#FCEABB]/80 italic my-6 font-light">
             &amp;
           </span>
           <h1 className="font-['var(--font-cursive)',serif] text-7xl sm:text-8xl md:text-9xl text-[#FFF5E1] font-normal tracking-wide drop-shadow-2xl">
-            Surya
+            Sanu
           </h1>
         </div>
 
@@ -133,13 +134,13 @@ export default function HeroSection({
           <div className="flex items-center justify-center gap-6 md:gap-10">
             <div className="text-right">
               <p className="text-white/90 text-sm md:text-base tracking-widest uppercase mb-1 font-light">
-                {isWedding ? "Tuesday" : "Thursday"}
+                {isEngagement ? "Saturday" : "Sunday"}
               </p>
-              <p className="text-white/90 text-xs md:text-sm tracking-widest uppercase font-medium">APR</p>
+              <p className="text-white/90 text-xs md:text-sm tracking-widest uppercase font-medium">JUN</p>
             </div>
             <div className="w-[1px] h-14 bg-[#FCEABB]/30" />
             <div className="text-6xl md:text-7xl text-[#FFF5E1] font-light font-serif tracking-tight drop-shadow-xl">
-              {isWedding ? "28" : "30"}
+              {isEngagement ? "06" : "14"}
             </div>
             <div className="w-[1px] h-14 bg-[#FCEABB]/30" />
             <div className="text-left">
@@ -148,7 +149,7 @@ export default function HeroSection({
             </div>
           </div>
           <p className="text-[#FCEABB]/90 mt-8 text-sm md:text-base tracking-[0.15em] font-light">
-            {isWedding ? "11:45 AM – 12:10 PM" : "06:00 PM – 09:30 PM"}
+            {isWedding ? "03:00 PM" : "06:30 PM"}
           </p>
         </div>
 
@@ -158,19 +159,21 @@ export default function HeroSection({
             Venue
           </p>
           <p className="text-white/95 text-xl md:text-2xl font-serif mb-3 tracking-wide drop-shadow-md">
-            {isWedding ? "Srinikethan Auditorium" : "Shoba Auditorium"}
+            {isWedding ? "St Lawrence Church" : isEngagement ? "Sion Auditorium (Parish Hall)" : "Green Nest Resort"}
           </p>
           <p className="text-white/75 text-sm md:text-base font-light tracking-wide leading-relaxed">
             {isWedding ? (
-              <>Karukachal Manimala Rd,<br />Karukachal, Kerala</>
+              <>Palluruthy, Kerala</>
+            ) : isEngagement ? (
+              <>Tripunithura, Kerala</>
             ) : (
-              <>Thiruvankulam - Chottanikkara Rd,<br />Tripunithura, Kerala</>
+              <>Kallanchery, North Kumbalangi<br />Kerala</>
             )}
           </p>
           <a
             href={isWedding
-              ? "https://maps.app.goo.gl/LmWf4hS1qZhDL15r8"
-              : "https://maps.app.goo.gl/6wVq2SsCkZsTsRfv9"
+              ? "https://maps.google.com/?q=St+Lawrence+Church+Palluruthy"
+              : isEngagement ? "https://maps.google.com/?q=Sion+Auditorium+Tripunithura" : "https://maps.google.com/?q=Green+Nest+Resort+Kumbalangi"
             }
             target="_blank"
             rel="noopener noreferrer"
@@ -181,14 +184,14 @@ export default function HeroSection({
         </div>
 
         {/* Additional Info for Both */}
-        {inviteType === "both" && (
+        {inviteType === "both-receptions" && (
           <div className="space-y-10 text-sm md:text-base font-light w-full max-w-lg mx-auto border-t border-white/10 pt-12">
             <div className="space-y-2">
               <p className="text-white/60 italic mb-5 font-serif text-lg">and for dinner thereafter</p>
               <p className="text-white/90 text-xs tracking-widest uppercase mb-3 font-medium">Wedding solemnized on</p>
-              <p className="text-white/85 tracking-wide">Tuesday, 28th April 2026</p>
-              <p className="text-white/70">at Srinikethan Auditorium,</p>
-              <p className="text-white/70">Karukachal, Kerala</p>
+              <p className="text-white/85 tracking-wide">Sunday, 14th June 2026</p>
+              <p className="text-white/70">at St Lawrence Church,</p>
+              <p className="text-white/70">Palluruthy, Kerala</p>
             </div>
           </div>
         )}

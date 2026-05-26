@@ -14,19 +14,19 @@ export default function GuestsPage() {
   const [showLinkModal, setShowLinkModal] = useState(false);
   const [newGuestLink, setNewGuestLink] = useState("");
   const [newGuestName, setNewGuestName] = useState("");
-  const [newGuestType, setNewGuestType] = useState<"both" | "wedding" | "reception">("both");
+  const [newGuestType, setNewGuestType] = useState<"both-receptions" | "wedding" | "wedding-reception">("both-receptions");
   const [copied, setCopied] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
-    inviteType: "both" as "both" | "wedding" | "reception"
+    inviteType: "both-receptions" as "both-receptions" | "wedding" | "wedding-reception"
   });
 
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"all" | "pending" | "confirmed" | "declined">("all");
 
   const fetchGuests = async () => {
-    const snap = await getDocs(collection(db, "guests"));
+    const snap = await getDocs(collection(db, "guests_jismon_sanu"));
     setGuests(snap.docs.map(d => ({ id: d.id, ...d.data() } as Guest)));
     setLoading(false);
   };
@@ -47,14 +47,14 @@ export default function GuestsPage() {
     let counter = 1;
 
     while (true) {
-      const q = query(collection(db, "guests"), where("slug", "==", slug));
+      const q = query(collection(db, "guests_jismon_sanu"), where("slug", "==", slug));
       const snap = await getDocs(q);
       if (snap.empty) break;
       slug = `${baseSlug}-${counter}`;
       counter++;
     }
 
-    await addDoc(collection(db, "guests"), {
+    await addDoc(collection(db, "guests_jismon_sanu"), {
       name: form.name.trim(),
       slug,
       inviteType: form.inviteType,
@@ -73,20 +73,20 @@ export default function GuestsPage() {
 
     // Reset form
     setShowModal(false);
-    setForm({ name: "", inviteType: "both" });
+    setForm({ name: "", inviteType: "both-receptions" });
     fetchGuests();
   };
 
   const copyToClipboard = async () => {
-    let dateStr = "28th & 30th April 2026";
-    if (newGuestType === "wedding") dateStr = "28th April 2026";
-    if (newGuestType === "reception") dateStr = "30th April 2026";
+    let dateStr = "6th & 14th June 2026";
+    if (newGuestType === "wedding") dateStr = "14th June 2026";
+    if (newGuestType === "wedding-reception") dateStr = "14th June 2026";
 
     const textToCopy = `Dear ${newGuestName},
 
 We are delighted to invite you to celebrate with us on ${dateStr}
 
-Your presence will truly make our day even more special. We kindly request you to mark your presence using the link below:
+Your presence will truly make our day even more special. 
 ${newGuestLink}
 
 We look forward to celebrating this joyous occasion together.`;
@@ -112,7 +112,7 @@ We look forward to celebrating this joyous occasion together.`;
   const exportCSV = () => {
     const rows = [
       ["Name", "Invite Type", "URL Slug", "RSVP Status"],
-      ...guests.map(g => [g.name, g.inviteType || "both", g.slug, g.rsvpStatus]),
+      ...guests.map(g => [g.name, g.inviteType || "both-receptions", g.slug, g.rsvpStatus]),
     ];
     const csv = rows.map(r => r.join(",")).join("\n");
     const a = document.createElement("a");
@@ -197,7 +197,7 @@ We look forward to celebrating this joyous occasion together.`;
                       <LinkIcon size={13} className="group-hover:scale-110 transition" />
                     </a>
                   </td>
-                  <td className="px-6 py-4 text-ink/70 capitalize">{g.inviteType || "both"}</td>
+                  <td className="px-6 py-4 text-ink/70 capitalize">{g.inviteType || "both-receptions"}</td>
                   <td className="px-6 py-4">
                     <span className={`px-3 py-1 rounded-full text-xs font-medium capitalize
                       ${g.rsvpStatus === "confirmed" ? "bg-green-100 text-green-700" :
@@ -244,9 +244,9 @@ We look forward to celebrating this joyous occasion together.`;
                 onChange={(e) => setForm(p => ({ ...p, inviteType: e.target.value as any }))}
                 className="w-full bg-paper border border-ink/10 rounded-2xl px-5 py-3.5 focus:outline-none focus:border-gold"
               >
-                <option value="both">Both (Wedding + Reception)</option>
-                <option value="wedding">Wedding Ceremony Only</option>
-                <option value="reception">Reception Only</option>
+                <option value="both-receptions">Both Receptions (Engagement & Wedding)</option>
+                <option value="wedding">Wedding + Reception</option>
+                <option value="wedding-reception">Wedding Reception Only</option>
               </select>
             </div>
 
@@ -265,8 +265,9 @@ We look forward to celebrating this joyous occasion together.`;
               </button>
             </div>
           </motion.div>
-        </div>
-      )}
+        </div >
+      )
+      }
 
       {/* Personalized Invite Link Popup */}
       <AnimatePresence>
@@ -311,7 +312,7 @@ We look forward to celebrating this joyous occasion together.`;
                     setShowLinkModal(false);
                     setNewGuestLink("");
                     setNewGuestName("");
-                    setNewGuestType("both");
+                    setNewGuestType("both-receptions");
                   }}
                   className="py-3 text-ink/70 hover:text-ink transition"
                 >
@@ -326,6 +327,6 @@ We look forward to celebrating this joyous occasion together.`;
           </div>
         )}
       </AnimatePresence>
-    </div>
+    </div >
   );
 }

@@ -4,35 +4,55 @@ import { useRef } from "react";
 
 const events = [
   {
+    title: "Engagement",
+    date: "Saturday | 6 June 2026",
+    subDate: "",
+    time: "Time: 4:00 PM",
+    desc: "Join us for the engagement ceremony.",
+    venue: "St Mary's Forane Church",
+    address: "Tripunithura, Kerala",
+    mapLink: "https://maps.google.com/?q=St+Marys+Forane+Church+Tripunithura",
+  },
+  {
+    title: "Engagement Reception",
+    date: "Saturday | 6 June 2026",
+    subDate: "",
+    time: "Time: 6:30 PM",
+    desc: "Join us for an evening of celebration.",
+    venue: "Sion Auditorium (Parish Hall)",
+    address: "Tripunithura, Kerala",
+    mapLink: "https://maps.google.com/?q=Sion+Auditorium+Tripunithura",
+  },
+  {
     title: "The Wedding",
-    date: "Tuesday | 28 April 2026",
-    subDate: "(1201 Medam 15)",
-    time: "Muhurtham: 11:45 AM to 12:10 PM",
-    desc: "and for lunch thereafter",
-    venue: "Srinikethan Auditorium",
-    address: "Karukachal Manimala Rd, Karukachal, Kerala",
-    mapLink: "https://maps.app.goo.gl/LmWf4hS1qZhDL15r8",
+    date: "Sunday | 14 June 2026",
+    subDate: "",
+    time: "Time: 3:00 PM",
+    desc: "and for celebrations thereafter",
+    venue: "St Lawrence Church",
+    address: "Palluruthy, Kerala",
+    mapLink: "https://maps.google.com/?q=St+Lawrence+Church+Palluruthy",
   },
   {
     title: "Wedding Reception",
-    date: "Thursday | 30 April 2026",
+    date: "Sunday | 14 June 2026",
     subDate: "",
-    time: "Time: 6:00 PM to 9:30 PM",
-    desc: "Join us for an evening of celebration.",
-    venue: "Shoba Auditorium, Thiruvankulam",
-    address: "Thiruvankulam - Chottanikkara Rd, Thrippunithura, Kerala",
-    mapLink: "https://maps.app.goo.gl/6wVq2SsCkZsTsRfv9",
+    time: "Time: 6:30 PM",
+    desc: "Join us for dinner and celebrations.",
+    venue: "Green Nest Resort",
+    address: "Kallanchery, North Kumbalangi, Kerala",
+    mapLink: "https://maps.google.com/?q=Green+Nest+Resort+Kumbalangi",
   },
 ];
 
 interface TimelineProps {
   desktopBg?: string;
-  inviteType?: "wedding" | "reception" | "both";
+  inviteType?: "wedding" | "both-receptions" | "wedding-reception";
 }
 
 export default function Timeline({
-  desktopBg = "/portrait2.webp",
-  inviteType = "both",
+  desktopBg = "/sanu2.jpeg",
+  inviteType = "both-receptions",
 }: TimelineProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -42,9 +62,9 @@ export default function Timeline({
   const pathLength = useSpring(scrollYProgress, { stiffness: 400, damping: 90 });
 
   const displayedEvents = events.filter((e) => {
-    if (inviteType === "both") return true;
-    if (inviteType === "wedding") return e.title === "The Wedding";
-    if (inviteType === "reception") return e.title === "Wedding Reception";
+    if (inviteType === "both-receptions") return e.title === "Engagement Reception" || e.title === "Wedding Reception";
+    if (inviteType === "wedding") return e.title === "The Wedding" || e.title === "Wedding Reception";
+    if (inviteType === "wedding-reception") return e.title === "Wedding Reception";
     return true;
   });
 
@@ -53,13 +73,18 @@ export default function Timeline({
       {/* Mobile: Portrait 2 - custom positioning */}
       <div
         className="absolute inset-0 bg-cover bg-[position:25%_center] bg-no-repeat lg:hidden"
-        style={{ backgroundImage: "url('/portrait2.webp')" }}
+        style={{ backgroundImage: "url('/sanu2.jpeg')", filter: "grayscale(100%) blur(2px)", transform: "scale(1.05)" }}
       />
 
       {/* Desktop Background */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden lg:block"
-        style={{ backgroundImage: `url('${desktopBg}')` }}
+        className="absolute inset-0 bg-cover bg-no-repeat hidden lg:block"
+        style={{
+          backgroundImage: `url('${desktopBg}')`,
+          backgroundPosition: "20% 50%", // Explicitly set position in style to bypass tailwind constraints
+          filter: "grayscale(100%) blur(2px)",
+          transform: "scale(1.15)" // Give the image scale room to actually pan left
+        }}
       />
 
       {/* Dark Tint Vibe Overlay for readable typography without cards */}

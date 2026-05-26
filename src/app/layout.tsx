@@ -23,7 +23,7 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
-  title: "Vishnu Surya — Wedding Invitation",
+  title: "Jismon & Sanu — Wedding Invitation",
   description: "You are cordially invited to celebrate our wedding.",
 };
 
