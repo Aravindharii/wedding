@@ -71,7 +71,7 @@ export default function RSVPForm({
       {/* Background - Portrait on Mobile, Same Image on Desktop with lighter overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/portrait4.webp')" }}
+        style={{ backgroundImage: "url('')" }}
       />
 
       {/* Light Dark Overlay for Readability */}
