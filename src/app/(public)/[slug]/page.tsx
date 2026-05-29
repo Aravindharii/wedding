@@ -15,7 +15,7 @@ export default function GuestInvitePage() {
   const slug = Array.isArray(slugParam) ? slugParam[0] : slugParam;
 
   const [guestName, setGuestName] = useState<string | null>(null);
-  const [inviteType, setInviteType] = useState<"wedding" | "both-receptions" | "wedding-reception">("both-receptions");
+  const [inviteType, setInviteType] = useState<"wedding" | "both-receptions" | "wedding-reception" | "engagement">("both-receptions");
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
@@ -39,7 +39,7 @@ export default function GuestInvitePage() {
       .then((snap) => {
         if (cancelled) return;
         if (snap.empty) { setNotFound(true); return; }
-        const guest = snap.docs[0]?.data() as { name?: string; inviteType?: "wedding" | "both-receptions" | "wedding-reception" } | undefined;
+        const guest = snap.docs[0]?.data() as { name?: string; inviteType?: "wedding" | "both-receptions" | "wedding-reception" | "engagement" } | undefined;
         const name = guest?.name?.trim();
         if (!name) { setNotFound(true); return; }
         setGuestName(name);

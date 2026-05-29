@@ -6,7 +6,7 @@ export interface Guest {
   tableNumber?: number;
   slug: string;
   rsvpStatus: "pending" | "confirmed" | "declined";
-  inviteType?: "wedding" | "both-receptions" | "wedding-reception";
+  inviteType?: "wedding" | "both-receptions" | "wedding-reception" | "engagement";
   plusOne?: boolean;
   mealPreference?: "veg" | "non-veg" | "vegan";
   message?: string;

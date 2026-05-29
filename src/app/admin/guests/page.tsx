@@ -14,12 +14,12 @@ export default function GuestsPage() {
   const [showLinkModal, setShowLinkModal] = useState(false);
   const [newGuestLink, setNewGuestLink] = useState("");
   const [newGuestName, setNewGuestName] = useState("");
-  const [newGuestType, setNewGuestType] = useState<"both-receptions" | "wedding" | "wedding-reception">("both-receptions");
+  const [newGuestType, setNewGuestType] = useState<"both-receptions" | "wedding" | "wedding-reception" | "engagement">("both-receptions");
   const [copied, setCopied] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
-    inviteType: "both-receptions" as "both-receptions" | "wedding" | "wedding-reception"
+    inviteType: "both-receptions" as "both-receptions" | "wedding" | "wedding-reception" | "engagement"
   });
 
   const [search, setSearch] = useState("");
@@ -81,6 +81,7 @@ export default function GuestsPage() {
     let dateStr = "6th & 14th June 2026";
     if (newGuestType === "wedding") dateStr = "14th June 2026";
     if (newGuestType === "wedding-reception") dateStr = "14th June 2026";
+    if (newGuestType === "engagement") dateStr = "6th June 2026";
 
     const textToCopy = `Dear ${newGuestName},
 
@@ -247,6 +248,7 @@ We look forward to celebrating this joyous occasion together.`;
                 <option value="both-receptions">Both Receptions (Engagement & Wedding)</option>
                 <option value="wedding">Wedding + Reception</option>
                 <option value="wedding-reception">Wedding Reception Only</option>
+                <option value="engagement">Engagement Only</option>
               </select>
             </div>
 

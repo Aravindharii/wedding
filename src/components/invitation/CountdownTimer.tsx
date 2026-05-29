@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 const WEDDING_DATE = new Date("2026-06-14T15:00:00+05:30");
 const RECEPTION_DATE = new Date("2026-06-06T18:30:00+05:30");
+const ENGAGEMENT_DATE = new Date("2026-06-06T16:00:00+05:30");
 
 function getTimeLeft(targetDate: Date) {
   const diff = targetDate.getTime() - Date.now();
@@ -18,7 +19,7 @@ function getTimeLeft(targetDate: Date) {
 
 interface CountdownTimerProps {
   desktopBg?: string;
-  inviteType?: "wedding" | "both-receptions" | "wedding-reception";
+  inviteType?: "wedding" | "both-receptions" | "wedding-reception" | "engagement";
 }
 
 export default function CountdownTimer({
@@ -28,7 +29,7 @@ export default function CountdownTimer({
   const [time, setTime] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [mounted, setMounted] = useState(false);
 
-  const targetDate = inviteType === "wedding" ? WEDDING_DATE : inviteType === "wedding-reception" ? WEDDING_DATE : RECEPTION_DATE;
+  const targetDate = inviteType === "engagement" ? ENGAGEMENT_DATE : inviteType === "wedding" ? WEDDING_DATE : inviteType === "wedding-reception" ? WEDDING_DATE : RECEPTION_DATE;
 
   useEffect(() => {
     setMounted(true);

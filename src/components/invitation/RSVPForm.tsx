@@ -68,14 +68,11 @@ export default function RSVPForm({
 
   return (
     <section id="rsvp" className="relative py-28 md:py-32 px-4 overflow-hidden min-h-screen flex items-center">
-      {/* Background - Portrait on Mobile, Same Image on Desktop with lighter overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('')" }}
-      />
+      {/* Black Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-black to-[#050505] z-0" />
 
-      {/* Light Dark Overlay for Readability */}
-      <div className="absolute inset-0 bg-black/75 z-0" />
+      {/* Subtle Accent Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/30 via-purple-950/10 to-transparent opacity-60 z-0" />
 
       <div className="relative z-10 max-w-lg mx-auto w-full">
         <motion.div

@@ -47,7 +47,7 @@ const events = [
 
 interface TimelineProps {
   desktopBg?: string;
-  inviteType?: "wedding" | "both-receptions" | "wedding-reception";
+  inviteType?: "wedding" | "both-receptions" | "wedding-reception" | "engagement";
 }
 
 export default function Timeline({
@@ -65,6 +65,7 @@ export default function Timeline({
     if (inviteType === "both-receptions") return e.title === "Engagement Reception" || e.title === "Wedding Reception";
     if (inviteType === "wedding") return e.title === "The Wedding" || e.title === "Wedding Reception";
     if (inviteType === "wedding-reception") return e.title === "Wedding Reception";
+    if (inviteType === "engagement") return e.title === "Engagement" || e.title === "Engagement Reception";
     return true;
   });
 

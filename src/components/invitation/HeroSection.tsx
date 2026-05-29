@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 interface HeroSectionProps {
   guestName?: string;
   desktopBg?: string;
-  inviteType?: "wedding" | "both-receptions" | "wedding-reception";
+  inviteType?: "wedding" | "both-receptions" | "wedding-reception" | "engagement";
 }
 
 export default function HeroSection({
@@ -16,7 +16,8 @@ export default function HeroSection({
 }: HeroSectionProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const isWedding = inviteType === "wedding";
-  const isEngagement = inviteType === "both-receptions"; // Show engagement reception details for both
+  const isEngagement = inviteType === "engagement";
+  const isBoth = inviteType === "both-receptions";
 
 
   // Preload the mobile portrait image
@@ -134,13 +135,13 @@ export default function HeroSection({
           <div className="flex items-center justify-center gap-6 md:gap-10">
             <div className="text-right">
               <p className="text-white/90 text-sm md:text-base tracking-widest uppercase mb-1 font-light">
-                {isEngagement ? "Saturday" : "Sunday"}
+                {isEngagement || isBoth ? "Saturday" : "Sunday"}
               </p>
               <p className="text-white/90 text-xs md:text-sm tracking-widest uppercase font-medium">JUN</p>
             </div>
             <div className="w-[1px] h-14 bg-[#FCEABB]/30" />
             <div className="text-6xl md:text-7xl text-[#FFF5E1] font-light font-serif tracking-tight drop-shadow-xl">
-              {isEngagement ? "06" : "14"}
+              {isEngagement || isBoth ? "06" : "14"}
             </div>
             <div className="w-[1px] h-14 bg-[#FCEABB]/30" />
             <div className="text-left">
@@ -149,7 +150,7 @@ export default function HeroSection({
             </div>
           </div>
           <p className="text-[#FCEABB]/90 mt-8 text-sm md:text-base tracking-[0.15em] font-light">
-            {isWedding ? "03:00 PM" : "06:30 PM"}
+            {isWedding ? "03:00 PM" : isEngagement ? "04:00 PM" : "06:30 PM"}
           </p>
         </div>
 
@@ -159,12 +160,12 @@ export default function HeroSection({
             Venue
           </p>
           <p className="text-white/95 text-xl md:text-2xl font-serif mb-3 tracking-wide drop-shadow-md">
-            {isWedding ? "St Lawrence Church" : isEngagement ? "Sion Auditorium (Parish Hall)" : "Green Nest Resort"}
+            {isWedding ? "St Lawrence Church" : isEngagement ? "St Mary's Forane Church" : isBoth ? "Sion Auditorium (Parish Hall)" : "Green Nest Resort"}
           </p>
           <p className="text-white/75 text-sm md:text-base font-light tracking-wide leading-relaxed">
             {isWedding ? (
               <>Palluruthy, Kerala</>
-            ) : isEngagement ? (
+            ) : isEngagement || isBoth ? (
               <>Tripunithura, Kerala</>
             ) : (
               <>Kallanchery, North Kumbalangi<br />Kerala</>
@@ -173,7 +174,7 @@ export default function HeroSection({
           <a
             href={isWedding
               ? "https://maps.google.com/?q=St+Lawrence+Church+Palluruthy"
-              : isEngagement ? "https://maps.google.com/?q=Sion+Auditorium+Tripunithura" : "https://maps.google.com/?q=Green+Nest+Resort+Kumbalangi"
+              : isEngagement ? "https://maps.google.com/?q=St+Marys+Forane+Church+Tripunithura" : isBoth ? "https://maps.google.com/?q=Sion+Auditorium+Tripunithura" : "https://maps.google.com/?q=Green+Nest+Resort+Kumbalangi"
             }
             target="_blank"
             rel="noopener noreferrer"
@@ -187,6 +188,12 @@ export default function HeroSection({
         {inviteType === "both-receptions" && (
           <div className="space-y-10 text-sm md:text-base font-light w-full max-w-lg mx-auto border-t border-white/10 pt-12">
             <div className="space-y-2">
+              <p className="text-white/90 text-xs tracking-widest uppercase mb-3 font-medium">Engagement solemnized on</p>
+              <p className="text-white/85 tracking-wide">Saturday, 6th June 2026</p>
+              <p className="text-white/70">at St Mary's Forane Church,</p>
+              <p className="text-white/70">Tripunithura, Kerala</p>
+            </div>
+            <div className="space-y-2 pt-6 border-t border-white/5">
               <p className="text-white/60 italic mb-5 font-serif text-lg">and for dinner thereafter</p>
               <p className="text-white/90 text-xs tracking-widest uppercase mb-3 font-medium">Wedding solemnized on</p>
               <p className="text-white/85 tracking-wide">Sunday, 14th June 2026</p>
