@@ -192,6 +192,14 @@ export default function HeroSection({
               <p className="text-white/85 tracking-wide">Saturday, 6th June 2026</p>
               <p className="text-white/70">at St Mary's Forane Church,</p>
               <p className="text-white/70">Tripunithura, Kerala</p>
+              <a
+                href="https://maps.google.com/?q=St+Marys+Forane+Church+Tripunithura"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-block text-[#FCEABB]/80 hover:text-[#FFF5E1] transition-colors text-[10px] tracking-[0.15em] uppercase border-b border-[#FCEABB]/30 hover:border-[#FFF5E1]/60 pb-0.5"
+              >
+                Get Directions ↗
+              </a>
             </div>
             <div className="space-y-2 pt-6 border-t border-white/5">
               <p className="text-white/60 italic mb-5 font-serif text-lg">and for dinner thereafter</p>
@@ -199,6 +207,14 @@ export default function HeroSection({
               <p className="text-white/85 tracking-wide">Sunday, 14th June 2026</p>
               <p className="text-white/70">at St Lawrence Church,</p>
               <p className="text-white/70">Palluruthy, Kerala</p>
+              <a
+                href="https://maps.google.com/?q=St+Lawrence+Church+Palluruthy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-block text-[#FCEABB]/80 hover:text-[#FFF5E1] transition-colors text-[10px] tracking-[0.15em] uppercase border-b border-[#FCEABB]/30 hover:border-[#FFF5E1]/60 pb-0.5"
+              >
+                Get Directions ↗
+              </a>
             </div>
           </div>
         )}
