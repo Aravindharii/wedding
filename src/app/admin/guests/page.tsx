@@ -79,17 +79,25 @@ export default function GuestsPage() {
 
   const copyToClipboard = async () => {
     let dateStr = "18th & 20th August 2026";
-    if (newGuestType === "wedding") dateStr = "20th August 2026";
-    if (newGuestType === "engagement") dateStr = "18th August 2026";
+    let eventName = "our Engagement & Wedding";
+    if (newGuestType === "wedding") {
+      dateStr = "20th August 2026";
+      eventName = "our Wedding";
+    }
+    if (newGuestType === "engagement") {
+      dateStr = "18th August 2026";
+      eventName = "our Engagement";
+    }
 
     const textToCopy = `Dear ${newGuestName},
 
-We are delighted to invite you to celebrate with us on ${dateStr}
+We are delighted to invite you to celebrate ${eventName} with us on ${dateStr}.
 
 Your presence will truly make our day even more special. 
 ${newGuestLink}
 
-We look forward to celebrating this joyous occasion together.`;
+With Love,
+Jiya & Jithin`;
 
     try {
       await navigator.clipboard.writeText(textToCopy);
