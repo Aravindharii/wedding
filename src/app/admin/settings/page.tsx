@@ -6,7 +6,7 @@ import { db } from "@/lib/firebase";
 
 export default function SettingsPage() {
   const [config, setConfig] = useState({
-    coupleNames: "jismon sanu",
+    coupleNames: "Jiya Jithin",
     weddingDate: "2026-04-12",
     venue: "The Grand Ballroom, Kochi",
     venueMapUrl: "https://maps.google.com",

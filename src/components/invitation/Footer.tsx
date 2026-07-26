@@ -21,7 +21,7 @@ export default function Footer() {
         className="relative z-10 max-w-3xl mx-auto px-4"
       >
         <div className="font-serif text-4xl md:text-5xl text-ink mb-8 tracking-wide drop-shadow-sm group-hover:scale-105 transition-transform duration-700">
-          <span className="text-gradient font-semibold">Jismon</span> <span className="text-gold italic mx-2 drop-shadow-md group-hover:rotate-12 inline-block transition-transform duration-500">&amp;</span> <span className="text-gradient font-semibold">Sanu</span>
+          <span className="text-gradient font-semibold">Jiya</span> <span className="text-gold italic mx-2 drop-shadow-md group-hover:rotate-12 inline-block transition-transform duration-500">&amp;</span> <span className="text-gradient font-semibold">Jithin</span>
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-8 text-ink/70 mb-12 tracking-[0.25em] uppercase text-[10px] md:text-xs font-semibold">

@@ -26,7 +26,7 @@ export default function GuestsPage() {
   const [filter, setFilter] = useState<"all" | "pending" | "confirmed" | "declined">("all");
 
   const fetchGuests = async () => {
-    const snap = await getDocs(collection(db, "guests_jismon_sanu"));
+    const snap = await getDocs(collection(db, "guests_jiya_jithin"));
     setGuests(snap.docs.map(d => ({ id: d.id, ...d.data() } as Guest)));
     setLoading(false);
   };
@@ -47,14 +47,14 @@ export default function GuestsPage() {
     let counter = 1;
 
     while (true) {
-      const q = query(collection(db, "guests_jismon_sanu"), where("slug", "==", slug));
+      const q = query(collection(db, "guests_jiya_jithin"), where("slug", "==", slug));
       const snap = await getDocs(q);
       if (snap.empty) break;
       slug = `${baseSlug}-${counter}`;
       counter++;
     }
 
-    await addDoc(collection(db, "guests_jismon_sanu"), {
+    await addDoc(collection(db, "guests_jiya_jithin"), {
       name: form.name.trim(),
       slug,
       inviteType: form.inviteType,
@@ -78,10 +78,9 @@ export default function GuestsPage() {
   };
 
   const copyToClipboard = async () => {
-    let dateStr = "6th & 14th June 2026";
-    if (newGuestType === "wedding") dateStr = "14th June 2026";
-    if (newGuestType === "wedding-reception") dateStr = "14th June 2026";
-    if (newGuestType === "engagement") dateStr = "6th June 2026";
+    let dateStr = "18th & 20th August 2026";
+    if (newGuestType === "wedding") dateStr = "20th August 2026";
+    if (newGuestType === "engagement") dateStr = "18th August 2026";
 
     const textToCopy = `Dear ${newGuestName},
 
@@ -105,7 +104,7 @@ We look forward to celebrating this joyous occasion together.`;
 
   const deleteGuest = async (id: string) => {
     if (!confirm("Are you sure you want to delete this guest?")) return;
-    await deleteDoc(doc(db, "guests_jismon_sanu", id));
+    await deleteDoc(doc(db, "guests_jiya_jithin", id));
     toast.success("Guest removed");
     fetchGuests();
   };
@@ -245,9 +244,8 @@ We look forward to celebrating this joyous occasion together.`;
                 onChange={(e) => setForm(p => ({ ...p, inviteType: e.target.value as any }))}
                 className="w-full bg-paper border border-ink/10 rounded-2xl px-5 py-3.5 focus:outline-none focus:border-gold"
               >
-                <option value="both-receptions">Both Receptions (Engagement & Wedding)</option>
-                <option value="wedding">Wedding + Reception</option>
-                <option value="wedding-reception">Wedding Reception Only</option>
+                <option value="both-receptions">Both Events (Engagement & Wedding)</option>
+                <option value="wedding">Wedding Only</option>
                 <option value="engagement">Engagement Only</option>
               </select>
             </div>

@@ -67,12 +67,12 @@ export default function RSVPForm({
   };
 
   return (
-    <section id="rsvp" className="relative py-28 md:py-32 px-4 overflow-hidden min-h-screen flex items-center">
-      {/* Black Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-black to-[#050505] z-0" />
+    <section id="rsvp" className="relative py-28 md:py-32 px-4 overflow-hidden min-h-screen flex items-center bg-purple-50">
+      {/* Light Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-purple-50 via-white to-purple-100 z-0" />
 
       {/* Subtle Accent Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/30 via-purple-950/10 to-transparent opacity-60 z-0" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-200/50 via-white/10 to-transparent opacity-80 z-0" />
 
       <div className="relative z-10 max-w-lg mx-auto w-full">
         <motion.div
@@ -81,13 +81,13 @@ export default function RSVPForm({
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="font-serif text-5xl md:text-6xl text-[#FFF5E1] mb-4">RSVP</h2>
+          <h2 className="font-serif text-5xl md:text-6xl text-purple-900 mb-4">RSVP</h2>
           {guestName && (
-            <p className="text-[#FCEABB] text-sm md:text-base tracking-wide font-medium">
+            <p className="text-purple-800 text-sm md:text-base tracking-wide font-medium">
               Dear {guestName},
             </p>
           )}
-          <p className="text-white/90 mt-2 text-sm font-medium">Please let us know if you can join us</p>
+          <p className="text-purple-950/80 mt-2 text-sm font-medium">Please let us know if you can join us</p>
         </motion.div>
 
         <AnimatePresence mode="wait">
@@ -100,7 +100,7 @@ export default function RSVPForm({
               exit={{ opacity: 0 }}
               className="text-center py-12"
             >
-              <p className="text-white/80 text-lg leading-relaxed">
+              <p className="text-purple-950/80 text-lg leading-relaxed">
                 Please use your personal invitation link to RSVP.
               </p>
             </motion.div>
@@ -113,12 +113,12 @@ export default function RSVPForm({
               transition={{ type: "spring", bounce: 0.4 }}
               className="text-center py-16"
             >
-              <div className="mx-auto w-20 h-20 bg-gradient-to-br from-[#FCEABB] to-amber-500 rounded-full flex items-center justify-center mb-8 shadow-xl">
-                <CheckCircle2 className="w-11 h-11 text-black" />
+              <div className="mx-auto w-20 h-20 bg-gradient-to-br from-purple-300 to-purple-500 rounded-full flex items-center justify-center mb-8 shadow-xl">
+                <CheckCircle2 className="w-11 h-11 text-white" />
               </div>
-              <h3 className="text-3xl font-serif text-[#FFF5E1] mb-3">Thank You!</h3>
-              <p className="text-white/70 text-lg">Your response has been recorded.</p>
-              <p className="text-white/60 mt-2">We look forward to celebrating with you.</p>
+              <h3 className="text-3xl font-serif text-purple-900 mb-3">Thank You!</h3>
+              <p className="text-purple-800/80 text-lg">Your response has been recorded.</p>
+              <p className="text-purple-700/70 mt-2">We look forward to celebrating with you.</p>
             </motion.div>
           ) : (
             /* Main Form */
@@ -131,16 +131,16 @@ export default function RSVPForm({
             >
               {/* Attendance Selection */}
               <div>
-                <label className="block text-[#FCEABB] text-xs uppercase tracking-widest mb-4 pl-1 font-medium">
+                <label className="block text-purple-900 text-xs uppercase tracking-widest mb-4 pl-1 font-bold">
                   Will you be attending?
                 </label>
                 <div className="grid grid-cols-2 gap-4">
                   <button
                     type="button"
                     onClick={() => handleAttendingSelect("yes")}
-                    className={`py-5 px-6 rounded-2xl font-medium transition-all flex items-center justify-center gap-3 ${attending === "yes"
-                      ? "bg-[#FCEABB] text-black shadow-lg"
-                      : "bg-white/10 hover:bg-white/15 border border-white/20 text-white"
+                    className={`py-5 px-6 rounded-xl font-bold transition-all flex items-center justify-center gap-3 border ${attending === "yes"
+                      ? "bg-purple-600 border-purple-600 text-white shadow-lg"
+                      : "bg-white/60 hover:bg-white border-purple-200 text-purple-900"
                       }`}
                   >
                     <CalendarCheck className="w-5 h-5" />
@@ -150,9 +150,9 @@ export default function RSVPForm({
                   <button
                     type="button"
                     onClick={() => handleAttendingSelect("no")}
-                    className={`py-5 px-6 rounded-2xl font-medium transition-all flex items-center justify-center gap-3 ${attending === "no"
-                      ? "bg-red-600 text-white shadow-lg"
-                      : "bg-white/10 hover:bg-white/15 border border-white/20 text-white"
+                    className={`py-5 px-6 rounded-xl font-bold transition-all flex items-center justify-center gap-3 border ${attending === "no"
+                      ? "bg-purple-900 border-purple-900 text-white shadow-lg"
+                      : "bg-white/60 hover:bg-white border-purple-200 text-purple-900"
                       }`}
                   >
                     <CalendarX className="w-5 h-5" />
@@ -167,9 +167,9 @@ export default function RSVPForm({
                 disabled={isSubmitting || !attending}
                 whileHover={{ scale: attending ? 1.02 : 1 }}
                 whileTap={{ scale: attending ? 0.97 : 1 }}
-                className={`w-full py-5 rounded-2xl font-semibold tracking-wider uppercase flex items-center justify-center gap-3 transition-all ${attending
-                  ? "bg-gradient-to-r from-[#FCEABB] to-amber-500 text-black shadow-lg hover:shadow-xl"
-                  : "bg-white/10 text-white/50 cursor-not-allowed"
+                className={`w-full py-5 rounded-xl font-bold tracking-wider uppercase flex items-center justify-center gap-3 transition-all ${attending
+                  ? "bg-gradient-to-r from-purple-500 to-purple-700 text-white shadow-lg hover:shadow-xl"
+                  : "bg-purple-100 text-purple-300 cursor-not-allowed"
                   }`}
               >
                 {isSubmitting ? (
@@ -182,7 +182,7 @@ export default function RSVPForm({
               </motion.button>
 
               {!attending && (
-                <p className="text-center text-white/80 text-xs font-medium">
+                <p className="text-center text-purple-700/80 text-xs font-bold">
                   Please select Yes or No to continue
                 </p>
               )}

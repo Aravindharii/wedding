@@ -23,7 +23,7 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
-  title: "Jismon & Sanu — Wedding Invitation",
+  title: "Jiya & Jithin — Wedding Invitation",
   description: "You are cordially invited to celebrate our wedding.",
 };
 
@@ -35,6 +35,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${playfair.variable} ${inter.variable} ${greatVibes.variable}`}
     >
       <body className="min-h-screen bg-paper text-ink font-sans antialiased">

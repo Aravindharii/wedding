@@ -8,14 +8,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing guest slug" }, { status: 400 });
   }
 
-  const snap = await getDocs(query(collection(db, "guests_jismon_sanu"), where("slug", "==", slug)));
+  const snap = await getDocs(query(collection(db, "guests_jiya_jithin"), where("slug", "==", slug)));
   if (snap.empty) return NextResponse.json({ error: "Guest not found" }, { status: 404 });
 
-  const guestDoc = snap.docs[0];
-  await updateDoc(doc(db, "guests_jismon_sanu", guestDoc.id), {
-    rsvpStatus: attending === "yes" ? "confirmed" : "declined",
-    message: message || "",
-    rsvpSubmittedAt: serverTimestamp(),
-  });
-  return NextResponse.json({ success: true });
+  try {
+    const guestDoc = snap.docs[0];
+    await updateDoc(doc(db, "guests_jiya_jithin", guestDoc.id), {
+      rsvpStatus: attending === "yes" ? "confirmed" : "declined",
+      message: message || "",
+      rsvpSubmittedAt: serverTimestamp(),
+    });
+    return NextResponse.json({ success: true });
+  } catch (error: any) {
+    console.error("RSVP Update Error:", error);
+    return NextResponse.json({ error: error.message || "Failed to update" }, { status: 500 });
+  }
 }
