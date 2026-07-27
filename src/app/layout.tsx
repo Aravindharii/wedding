@@ -25,14 +25,14 @@ const greatVibes = Great_Vibes({
 export const metadata: Metadata = {
   metadataBase: new URL("https://jiyajithin.netlify.app"),
 
-  title: "Jiya & Jithin — Wedding Invitation",
-  description: "You are cordially invited to celebrate our wedding.",
+  title: "Jiya & Jithin —  Invitation",
+  description: "You are cordially invited to celebrate our journey to forever together.",
 
   openGraph: {
-    title: "Jiya & Jithin — Wedding Invitation",
-    description: "You are cordially invited to celebrate our wedding.",
+    title: "Jiya & Jithin —  Invitation",
+    description: "You are cordially invited to celebrate our journey to forever together.",
     url: "https://jiyajithin.netlify.app",
-    siteName: "Jiya & Jithin Wedding",
+    siteName: "Jiya & Jithin Invitation",
     locale: "en_US",
     type: "website",
     images: [
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
         url: "/preview.jpg",
         width: 1200,
         height: 630,
-        alt: "Jiya & Jithin Wedding Invitation",
+        alt: "Jiya & Jithin  Invitation",
       },
     ],
   },
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Jiya & Jithin — Wedding Invitation",
-    description: "You are cordially invited to celebrate our wedding.",
+    description: "You are cordially invited to celebrate our journey to forever together",
     images: ["/preview.jpg"],
   },
 
