@@ -6,9 +6,8 @@ export default function ReceptionPage() {
   return (
     <main className="min-h-screen">
       <HeroSection inviteType="wedding-reception" />
-      <Timeline inviteType="wedding-reception" />
-      <CountdownTimer inviteType="wedding-reception" />
+      <Timeline />
+      <CountdownTimer />
     </main>
   );
 }
-

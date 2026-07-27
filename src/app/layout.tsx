@@ -23,16 +23,16 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://jiyajithin.netlify.app"),
+  metadataBase: new URL("https://jithin-jiya.netlify.app"),
 
-  title: "Jiya & Jithin —  Invitation",
+  title: "Jithin & Jiya —  Invitation",
   description: "You are cordially invited to celebrate our journey to forever together.",
 
   openGraph: {
-    title: "Jiya & Jithin —  Invitation",
+    title: "Jithin & Jiya —  Invitation",
     description: "You are cordially invited to celebrate our journey to forever together.",
     url: "https://jiyajithin.netlify.app",
-    siteName: "Jiya & Jithin Invitation",
+    siteName: "Jithin & Jiya Invitation",
     locale: "en_US",
     type: "website",
     images: [
@@ -40,14 +40,14 @@ export const metadata: Metadata = {
         url: "/preview.jpg",
         width: 1200,
         height: 630,
-        alt: "Jiya & Jithin  Invitation",
+        alt: "Jithin & Jiya  Invitation",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Jiya & Jithin — Wedding Invitation",
+    title: "Jithin & Jiya — Wedding Invitation",
     description: "You are cordially invited to celebrate our journey to forever together",
     images: ["/preview.jpg"],
   },

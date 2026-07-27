@@ -4,16 +4,6 @@ import { useRef } from "react";
 
 const events = [
   {
-    title: "Engagement",
-    date: "18 | 8 | 2026 | Tuesday",
-    subDate: "",
-    time: "11:00 AM Onwards",
-    desc: "Join us to celebrate the beginning.",
-    venue: "Bethel Hall",
-    address: "St Mary's Church, Thessery, Perambra P.O, 680689, Chalakudy",
-    mapLink: "https://maps.google.com/?q=St+Marys+Forane+Church+Thessery",
-  },
-  {
     title: "Marriage",
     date: "20 August 2026 | Thursday",
     subDate: "By the grace of God will be solemnized",
@@ -27,12 +17,10 @@ const events = [
 
 interface TimelineProps {
   desktopBg?: string;
-  inviteType?: string;
 }
 
 export default function Timeline({
-  desktopBg = "/bg_lavender.png", // Note: The actual images should be changed later or via admin panel if supported.
-  inviteType = "both-receptions",
+  desktopBg = "/bg_lavender.png",
 }: TimelineProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -41,15 +29,9 @@ export default function Timeline({
   });
   const pathLength = useSpring(scrollYProgress, { stiffness: 400, damping: 90 });
 
-  const displayedEvents = events.filter((e) => {
-    if (inviteType === "engagement") return e.title === "Engagement";
-    if (inviteType === "wedding" || inviteType === "wedding-reception") return e.title === "Marriage";
-    return true;
-  });
-
   return (
     <section id="schedule" className="relative py-32 px-4 overflow-hidden bg-purple-50" ref={containerRef}>
-      {/* Mobile background removed or adjusted */}
+      {/* Mobile background */}
       <div
         className="absolute inset-0 bg-cover bg-[position:25%_center] bg-no-repeat lg:hidden"
         style={{ backgroundImage: "url('/bg_lavender.png')", filter: "blur(2px) hue-rotate(280deg)", transform: "scale(1.05)" }}
@@ -95,7 +77,7 @@ export default function Timeline({
           />
 
           <div className="space-y-24 md:space-y-36">
-            {displayedEvents.map((e, i) => {
+            {events.map((e, i) => {
               const isEven = i % 2 === 0;
               return (
                 <motion.div
@@ -103,12 +85,18 @@ export default function Timeline({
                   initial={{ opacity: 0, x: isEven ? -40 : 40 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ type: "spring", bounce: 0.1, duration: 1 }}
-                  className={`relative flex flex-col md:flex-row gap-10 md:gap-16 ${isEven ? "md:flex-row-reverse" : ""}`}
+                  className={`relative flex flex-col md:flex-row gap-10 md:gap-16 ${
+                    isEven ? "md:flex-row-reverse" : ""
+                  }`}
                 >
                   {/* Elegant Dot */}
                   <div className="absolute left-6 md:left-1/2 -translate-x-1/2 w-5 h-5 bg-white border-2 border-purple-400 rotate-45 z-10 mt-6 shadow-[0_0_15px_rgba(168,85,247,0.4)]" />
 
-                  <div className={`w-full md:w-1/2 ${isEven ? "md:pr-16 md:text-right" : "md:pl-16 md:text-left"} pl-16 md:pl-0`}>
+                  <div
+                    className={`w-full md:w-1/2 ${
+                      isEven ? "md:pr-16" : "md:pl-16"
+                    } pl-16 md:pl-0`}
+                  >
                     <motion.div
                       whileHover={{ y: -5 }}
                       className="transition-all duration-500 py-2 bg-white/60 backdrop-blur-md p-5 md:p-6 rounded-3xl border border-purple-100 shadow-xl shadow-purple-900/5"
@@ -117,35 +105,84 @@ export default function Timeline({
                         {e.title}
                       </h3>
 
-                      <div className={`space-y-5 text-purple-950 font-medium text-sm md:text-base flex flex-col ${isEven ? "md:items-end" : "md:items-start"}`}>
-
+                      <div
+                        className={`space-y-5 text-purple-950 font-medium text-sm md:text-base flex flex-col items-start`}
+                      >
                         {/* Date */}
-                        <div className={`flex gap-4 max-w-sm ${isEven ? "md:flex-row-reverse text-right" : "flex-row text-left"}`}>
-                          <div className="flex-col mt-1.5 hidden md:flex"><span className="text-[10px] text-amber-500">◈</span></div>
-                          <div className="md:hidden mt-1.5"><span className="text-[10px] text-amber-500">◈</span></div>
-                          <div>
-                            <p className="text-purple-950 tracking-widest uppercase text-xs md:text-sm font-bold">{e.date}</p>
-                            {e.subDate && <p className="text-purple-800 text-[10px] md:text-xs tracking-widest mt-2 font-bold italic">{e.subDate}</p>}
+                        <div
+                          className={`flex gap-4 w-full ${
+                            isEven ? "md:flex-row-reverse" : "flex-row"
+                          } text-left`}
+                        >
+                          <div className="flex-col mt-1.5 hidden md:flex shrink-0">
+                            <span className="text-[10px] text-purple-400">◈</span>
+                          </div>
+
+                          <div className="md:hidden mt-1.5 shrink-0">
+                            <span className="text-[10px] text-purple-400">◈</span>
+                          </div>
+
+                          <div className="w-full max-w-xs">
+                            <p className="text-purple-950 tracking-widest uppercase text-xs md:text-sm font-bold">
+                              {e.date}
+                            </p>
+
+                            {e.subDate && (
+                              <p className="text-purple-800 text-[10px] md:text-xs tracking-widest mt-2 font-bold italic">
+                                {e.subDate}
+                              </p>
+                            )}
                           </div>
                         </div>
 
                         {/* Time */}
-                        <div className={`flex gap-4 max-w-sm ${isEven ? "md:flex-row-reverse text-right" : "flex-row text-left"}`}>
-                          <div className="flex-col mt-1.5 hidden md:flex"><span className="text-[10px] text-amber-500">◈</span></div>
-                          <div className="md:hidden mt-1.5"><span className="text-[10px] text-amber-500">◈</span></div>
-                          <div>
-                            <p className="text-amber-600 tracking-wider font-serif text-base md:text-lg font-semibold">{e.time}</p>
-                            <p className="text-purple-900/80 text-xs mt-1 tracking-wide font-medium">{e.desc}</p>
+                        <div
+                          className={`flex gap-4 w-full ${
+                            isEven ? "md:flex-row-reverse" : "flex-row"
+                          } text-left`}
+                        >
+                          <div className="flex-col mt-1.5 hidden md:flex shrink-0">
+                            <span className="text-[10px] text-purple-400">◈</span>
+                          </div>
+
+                          <div className="md:hidden mt-1.5 shrink-0">
+                            <span className="text-[10px] text-purple-400">◈</span>
+                          </div>
+
+                          <div className="w-full max-w-xs">
+                            <p className="text-purple-700 tracking-wider font-serif text-base md:text-lg font-semibold">
+                              {e.time}
+                            </p>
+
+                            <p className="text-purple-900/80 text-xs mt-1 tracking-wide font-medium">
+                              {e.desc}
+                            </p>
                           </div>
                         </div>
 
                         {/* Venue */}
-                        <div className={`flex gap-4 max-w-sm ${isEven ? "md:flex-row-reverse text-right" : "flex-row text-left"}`}>
-                          <div className="flex-col mt-1.5 hidden md:flex"><span className="text-[10px] text-amber-500">◈</span></div>
-                          <div className="md:hidden mt-1.5"><span className="text-[10px] text-amber-500">◈</span></div>
-                          <div>
-                            <p className="text-purple-950 tracking-wide font-bold">{e.venue}</p>
-                            <p className="text-purple-900/80 text-xs leading-relaxed mt-1 font-medium">{e.address}</p>
+                        <div
+                          className={`flex gap-4 w-full ${
+                            isEven ? "md:flex-row-reverse" : "flex-row"
+                          } text-left`}
+                        >
+                          <div className="flex-col mt-1.5 hidden md:flex shrink-0">
+                            <span className="text-[10px] text-purple-400">◈</span>
+                          </div>
+
+                          <div className="md:hidden mt-1.5 shrink-0">
+                            <span className="text-[10px] text-purple-400">◈</span>
+                          </div>
+
+                          <div className="w-full max-w-xs">
+                            <p className="text-purple-950 tracking-wide font-bold">
+                              {e.venue}
+                            </p>
+
+                            <p className="text-purple-900/80 text-xs leading-relaxed mt-1 font-medium">
+                              {e.address}
+                            </p>
+
                             {e.mapLink && (
                               <a
                                 href={e.mapLink}
@@ -158,7 +195,6 @@ export default function Timeline({
                             )}
                           </div>
                         </div>
-
                       </div>
                     </motion.div>
                   </div>

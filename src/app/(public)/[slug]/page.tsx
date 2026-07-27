@@ -15,7 +15,6 @@ export default function GuestInvitePage() {
   const slug = Array.isArray(slugParam) ? slugParam[0] : slugParam;
 
   const [guestName, setGuestName] = useState<string | null>(null);
-  const [inviteType, setInviteType] = useState<"wedding" | "both-receptions" | "wedding-reception" | "engagement">("both-receptions");
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
@@ -30,20 +29,17 @@ export default function GuestInvitePage() {
     if (!slug) {
       setNotFound(true);
       setLoading(false);
-      return () => {
-        cancelled = true;
-      };
+      return () => { cancelled = true; };
     }
 
     getDocs(query(collection(db, "guests_jiya_jithin"), where("slug", "==", slug)))
       .then((snap) => {
         if (cancelled) return;
         if (snap.empty) { setNotFound(true); return; }
-        const guest = snap.docs[0]?.data() as { name?: string; inviteType?: "wedding" | "both-receptions" | "wedding-reception" | "engagement" } | undefined;
+        const guest = snap.docs[0]?.data() as { name?: string } | undefined;
         const name = guest?.name?.trim();
         if (!name) { setNotFound(true); return; }
         setGuestName(name);
-        setInviteType(guest?.inviteType || "both-receptions");
       })
       .catch(() => { if (!cancelled) setNotFound(true); })
       .finally(() => { if (!cancelled) setLoading(false); });
@@ -83,9 +79,9 @@ export default function GuestInvitePage() {
 
   return (
     <main className="min-h-screen">
-      <HeroSection guestName={guestName ?? undefined} inviteType={inviteType} />
-      <Timeline inviteType={inviteType} />
-      <CountdownTimer inviteType={inviteType} />
+      <HeroSection guestName={guestName ?? undefined} />
+      <Timeline />
+      <CountdownTimer />
       <RSVPForm guestSlug={slug} guestName={guestName ?? undefined} />
     </main>
   );

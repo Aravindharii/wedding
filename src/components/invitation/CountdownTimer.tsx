@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const MARRIAGE_DATE = new Date("2026-08-20T10:30:00+05:30");
-const ENGAGEMENT_DATE = new Date("2026-08-18T11:00:00+05:30");
+const BG_IMAGE = "/bg_lavender.png";
 
-function getTimeLeft(targetDate: Date) {
-  const diff = targetDate.getTime() - Date.now();
+function getTimeLeft(target: Date) {
+  const diff = target.getTime() - Date.now();
   if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
   return {
     days: Math.floor(diff / 86400000),
@@ -16,58 +16,28 @@ function getTimeLeft(targetDate: Date) {
   };
 }
 
-interface CountdownTimerProps {
-  desktopBg?: string;
-  inviteType?: "wedding" | "both-receptions" | "wedding-reception" | "engagement";
-}
-
-export default function CountdownTimer({
-  desktopBg = "/bg_lavender.png",
-  inviteType = "both-receptions",
-}: CountdownTimerProps) {
-  const [time, setTime] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  const [mounted, setMounted] = useState(false);
-
-  let targetDate = MARRIAGE_DATE;
-  if (inviteType === "engagement") {
-    targetDate = ENGAGEMENT_DATE;
-  } else if (inviteType === "both-receptions" || !inviteType) {
-    targetDate = ENGAGEMENT_DATE.getTime() > Date.now() ? ENGAGEMENT_DATE : MARRIAGE_DATE;
-  }
+export default function CountdownTimer() {
+  const [time, setTime] = useState(() => getTimeLeft(MARRIAGE_DATE));
 
   useEffect(() => {
-    setMounted(true);
-    setTime(getTimeLeft(targetDate));
-    const interval = setInterval(() => setTime(getTimeLeft(targetDate)), 1000);
+    const interval = setInterval(() => setTime(getTimeLeft(MARRIAGE_DATE)), 1000);
     return () => clearInterval(interval);
-  }, [inviteType]);
-
-  if (!mounted) return <section className="py-32 bg-purple-50" />;
+  }, []);
 
   return (
     <section className="relative py-32 overflow-hidden text-purple-950 min-h-[600px] flex items-center justify-center">
       {/* Mobile Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat lg:hidden"
-        style={{ backgroundImage: "url('/bg_lavender.png')", filter: "blur(1px) hue-rotate(280deg)", transform: "scale(1.05)" }}
+        style={{ backgroundImage: `url('${BG_IMAGE}')`, filter: "blur(1px) hue-rotate(280deg)", transform: "scale(1.05)" }}
       />
-
       {/* Desktop Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden lg:block"
-        style={{ backgroundImage: `url('${desktopBg}')`, filter: "blur(2px) hue-rotate(280deg)", transform: "scale(1.05)" }}
+        style={{ backgroundImage: `url('${BG_IMAGE}')`, filter: "blur(2px) hue-rotate(280deg)", transform: "scale(1.05)" }}
       />
-
-      {/* Light Overlay */}
       <div className="absolute inset-0 bg-white/10 z-0" />
-
-      {/* Soft Vignette */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          background: "radial-gradient(ellipse at center, transparent 40%, rgba(255,255,255,0.40) 100%)",
-        }}
-      />
+      <div className="absolute inset-0 z-0" style={{ background: "radial-gradient(ellipse at center, transparent 40%, rgba(255,255,255,0.40) 100%)" }} />
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
         <motion.div
@@ -95,7 +65,6 @@ export default function CountdownTimer({
               <div className="relative flex flex-col items-center justify-center w-28 h-32 md:w-36 md:h-44
                               bg-white/60 backdrop-blur-md border border-purple-200
                               hover:border-purple-400 rounded-3xl overflow-hidden transition-all shadow-lg shadow-purple-900/10">
-
                 <motion.span
                   key={val}
                   initial={{ y: -12, opacity: 0 }}
@@ -104,7 +73,6 @@ export default function CountdownTimer({
                 >
                   {String(val).padStart(2, "0")}
                 </motion.span>
-
                 <span className="text-purple-700 text-xs md:text-sm uppercase tracking-[0.25em] mt-3 font-bold">
                   {label}
                 </span>

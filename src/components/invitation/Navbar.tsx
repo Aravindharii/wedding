@@ -27,41 +27,15 @@ export default function Navbar() {
           className={`font-serif text-2xl md:text-3xl tracking-wider group flex-shrink-0 ${isScrolled ? "text-ink drop-shadow-sm" : "text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.45)]"
             }`}
         >
-          <span className={`transition-all duration-500 font-semibold ${isScrolled ? "text-purple-950" : "text-purple-950 drop-shadow-md"}`}>Jiya</span>
-          <span className={`mx-2 text-purple-700 italic font-serif transition-opacity duration-500 ${isScrolled ? "opacity-100" : "opacity-80"}`}>&amp;</span>
-          <span className={`transition-all duration-500 font-semibold ${isScrolled ? "text-purple-950" : "text-purple-950 drop-shadow-md"}`}>Jithin</span>
+          <span className="text-purple-950 font-semibold">Jithin</span>
+          <span className="mx-2 text-purple-700 italic font-serif">&amp;</span>
+          <span className="text-purple-950 font-semibold">Jiya</span>
         </Link>
 
         <div
           className={`flex items-center gap-2 text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.25em] uppercase transition-all duration-500 font-bold ${isScrolled ? "text-purple-900 gap-3 md:gap-8" : "text-purple-900 drop-shadow-md gap-6 md:gap-12"
             }`}
         >
-          {/* <Link
-            href="/wedding"
-            className="group relative px-3 py-2 hover:text-white transition-colors duration-300 rounded-full"
-          >
-            {isScrolled && (
-              <span className="absolute inset-0 bg-gold/10 rounded-full scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300" />
-            )}
-            <span className="relative z-10 font-semibold">Wedding</span>
-            {!isScrolled && (
-              <span className="absolute bottom-0 left-1/2 w-0 h-[2px] bg-gradient-to-r from-gold to-white/50 -translate-x-1/2 group-hover:w-[calc(100%-16px)] transition-all duration-300 rounded-full" />
-            )}
-          </Link>
-
-          <Link
-            href="/reception"
-            className="group relative px-3 py-2 hover:text-white transition-colors duration-300 rounded-full"
-          >
-            {isScrolled && (
-              <span className="absolute inset-0 bg-gold/10 rounded-full scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300" />
-            )}
-            <span className="relative z-10 font-semibold">Reception</span>
-            {!isScrolled && (
-              <span className="absolute bottom-0 left-1/2 w-0 h-[2px] bg-gradient-to-r from-gold to-white/50 -translate-x-1/2 group-hover:w-[calc(100%-16px)] transition-all duration-300 rounded-full" />
-            )}
-          </Link> */}
-
           <a
             href="#schedule"
             className="group relative px-3 py-2 hover:text-purple-700 transition-colors duration-300 rounded-full"

@@ -14,12 +14,12 @@ export default function GuestsPage() {
   const [showLinkModal, setShowLinkModal] = useState(false);
   const [newGuestLink, setNewGuestLink] = useState("");
   const [newGuestName, setNewGuestName] = useState("");
-  const [newGuestType, setNewGuestType] = useState<"both-receptions" | "wedding" | "wedding-reception" | "engagement">("both-receptions");
+  const [newGuestType, setNewGuestType] = useState<"both-receptions" | "wedding" | "wedding-reception">("both-receptions");
   const [copied, setCopied] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
-    inviteType: "both-receptions" as "both-receptions" | "wedding" | "wedding-reception" | "engagement"
+    inviteType: "both-receptions" as "both-receptions" | "wedding" | "wedding-reception"
   });
 
   const [search, setSearch] = useState("");
@@ -78,15 +78,11 @@ export default function GuestsPage() {
   };
 
   const copyToClipboard = async () => {
-    let dateStr = "18th & 20th August 2026";
-    let eventName = "our Engagement & Wedding";
-    if (newGuestType === "wedding") {
+    let dateStr = "20th August 2026";
+    let eventName = "our Wedding";
+    if (newGuestType === "wedding-reception") {
       dateStr = "20th August 2026";
-      eventName = "our Wedding";
-    }
-    if (newGuestType === "engagement") {
-      dateStr = "18th August 2026";
-      eventName = "our Engagement";
+      eventName = "our Wedding & Reception";
     }
 
     const textToCopy = `Dear ${newGuestName},
@@ -252,9 +248,9 @@ Jiya & Jithin`;
                 onChange={(e) => setForm(p => ({ ...p, inviteType: e.target.value as any }))}
                 className="w-full bg-paper border border-ink/10 rounded-2xl px-5 py-3.5 focus:outline-none focus:border-gold"
               >
-                <option value="both-receptions">Both Events (Engagement & Wedding)</option>
+                <option value="both-receptions">Both Events (Wedding & Reception)</option>
                 <option value="wedding">Wedding Only</option>
-                <option value="engagement">Engagement Only</option>
+                <option value="wedding-reception">Wedding & Reception</option>
               </select>
             </div>
 
