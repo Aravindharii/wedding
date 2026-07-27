@@ -5,7 +5,7 @@ import Timeline from "@/components/invitation/Timeline";
 export default function ReceptionPage() {
   return (
     <main className="min-h-screen">
-      <HeroSection inviteType="wedding-reception" />
+      <HeroSection/>
       <Timeline />
       <CountdownTimer />
     </main>
