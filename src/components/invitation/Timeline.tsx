@@ -11,7 +11,7 @@ const events = [
     desc: "Join us to celebrate the beginning.",
     venue: "Bethel Hall",
     address: "St Mary's Church, Thessery, Perambra P.O, 680689, Chalakudy",
-    mapLink: "https://maps.google.com/?q=St+Marys+Forane+Church+Thessery",
+    mapLink: "https://maps.app.goo.gl/W7zMeFbgSBeRZi6G8?g_st=ac",
   },
   {
     title: "Marriage",
