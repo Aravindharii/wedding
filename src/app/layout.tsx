@@ -23,15 +23,46 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://jiyajithin.netlify.app"),
+
   title: "Jiya & Jithin — Wedding Invitation",
   description: "You are cordially invited to celebrate our wedding.",
+
+  openGraph: {
+    title: "Jiya & Jithin — Wedding Invitation",
+    description: "You are cordially invited to celebrate our wedding.",
+    url: "https://jiyajithin.netlify.app",
+    siteName: "Jiya & Jithin Wedding",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/preview.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Jiya & Jithin Wedding Invitation",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Jiya & Jithin — Wedding Invitation",
+    description: "You are cordially invited to celebrate our wedding.",
+    images: ["/preview.jpg"],
+  },
+
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html
       lang="en"
