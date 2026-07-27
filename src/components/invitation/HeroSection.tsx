@@ -154,7 +154,7 @@ export default function HeroSection({
                 <div className="mt-8 pt-6 border-t border-purple-200/50 w-full flex flex-col items-center">
                   <p className="text-purple-950 text-lg md:text-xl font-serif mb-2 font-semibold">Bethel Hall</p>
                   <p className="text-purple-800 text-xs md:text-sm font-medium leading-relaxed text-center">
-                    St Mary's Church, Thessery,<br />Perambra P.O, 680689, Chalakudy.
+                    St Mary's Church, Thessery,<br />Perambra, Chalakudy.
                   </p>
                 </div>
               </div>
@@ -163,7 +163,7 @@ export default function HeroSection({
             {/* Wedding */}
             {(isBoth || isWedding) && (
               <div className="bg-white/80 backdrop-blur-md border border-purple-200 rounded-3xl p-6 md:p-8 w-full shadow-lg shadow-amber-900/5 relative z-10 flex flex-col items-center">
-                <p className="text-purple-800 text-xs tracking-widest uppercase mb-6 font-black italic">By the grace of God will be solemnized,<br />Our Marriage on</p>
+                <p className="text-purple-800 text-xs tracking-widest uppercase mb-6 font-black italic">By the grace of God ,<br />Our Marriage will be solemnized on </p>
                 <div className="flex items-center justify-center gap-4 md:gap-10">
                   <div className="text-right">
                     <p className="text-amber-700 text-sm md:text-base tracking-widest uppercase mb-1 font-bold">Thursday</p>
