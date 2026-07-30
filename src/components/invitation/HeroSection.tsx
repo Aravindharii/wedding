@@ -84,18 +84,18 @@ export default function HeroSection({
           <h1 className="font-['var(--font-cursive)',serif] text-7xl sm:text-8xl md:text-9xl text-purple-950 font-normal tracking-wide drop-shadow-sm">
             Jiya
           </h1>
-          <p className="text-purple-900/80 text-xs md:text-sm tracking-wide mt-3 mb-2 font-semibold">
+          {/* <p className="text-purple-900/80 text-xs md:text-sm tracking-wide mt-3 mb-2 font-semibold">
             D/o Mr. Thomaskutty P C & Mrs. Lissy Thomas
-          </p>
+          </p> */}
           <span className="font-serif text-3xl md:text-5xl text-amber-600/80 italic my-4 font-light">
             &amp;
           </span>
           <h1 className="font-['var(--font-cursive)',serif] text-7xl sm:text-8xl md:text-9xl text-purple-950 font-normal tracking-wide drop-shadow-sm">
             Jithin
           </h1>
-          <p className="text-purple-900/80 text-xs md:text-sm tracking-wide mt-3 font-semibold">
+          {/* <p className="text-purple-900/80 text-xs md:text-sm tracking-wide mt-3 font-semibold">
             S/o Mr. John Ghee Varghese & Mrs. Gracy Varghese
-          </p>
+          </p> */}
         </div>
 
         {/* Guest Name Section */}
