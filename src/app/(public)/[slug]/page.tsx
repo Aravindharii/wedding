@@ -15,7 +15,7 @@ export default function GuestInvitePage() {
   const slug = Array.isArray(slugParam) ? slugParam[0] : slugParam;
 
   const [guestName, setGuestName] = useState<string | null>(null);
-  const [inviteType, setInviteType] = useState<"wedding" | "both-receptions" | "wedding-reception" | "engagement">("both-receptions");
+  const [inviteType, setInviteType] = useState<"wedding" | "both-receptions" | "wedding-reception" | "engagement">("wedding");
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
@@ -35,7 +35,7 @@ export default function GuestInvitePage() {
       };
     }
 
-    getDocs(query(collection(db, "guests_jiya_jithin"), where("slug", "==", slug)))
+    getDocs(query(collection(db, "guests_anish_revathi"), where("slug", "==", slug)))
       .then((snap) => {
         if (cancelled) return;
         if (snap.empty) { setNotFound(true); return; }
@@ -43,7 +43,7 @@ export default function GuestInvitePage() {
         const name = guest?.name?.trim();
         if (!name) { setNotFound(true); return; }
         setGuestName(name);
-        setInviteType(guest?.inviteType || "both-receptions");
+        setInviteType(guest?.inviteType || "wedding");
       })
       .catch(() => { if (!cancelled) setNotFound(true); })
       .finally(() => { if (!cancelled) setLoading(false); });

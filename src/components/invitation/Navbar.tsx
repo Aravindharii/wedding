@@ -27,9 +27,9 @@ export default function Navbar() {
           className={`font-serif text-2xl md:text-3xl tracking-wider group flex-shrink-0 ${isScrolled ? "text-ink drop-shadow-sm" : "text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.45)]"
             }`}
         >
-          <span className={`transition-all duration-500 font-semibold ${isScrolled ? "text-purple-950" : "text-purple-950 drop-shadow-md"}`}>Jiya</span>
+          <span className={`transition-all duration-500 font-semibold ${isScrolled ? "text-purple-950" : "text-purple-950 drop-shadow-md"}`}>Anish</span>
           <span className={`mx-2 text-purple-700 italic font-serif transition-opacity duration-500 ${isScrolled ? "opacity-100" : "opacity-80"}`}>&amp;</span>
-          <span className={`transition-all duration-500 font-semibold ${isScrolled ? "text-purple-950" : "text-purple-950 drop-shadow-md"}`}>Jithin</span>
+          <span className={`transition-all duration-500 font-semibold ${isScrolled ? "text-purple-950" : "text-purple-950 drop-shadow-md"}`}>Revathi</span>
         </Link>
 
         <div

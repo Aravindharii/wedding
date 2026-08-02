@@ -14,19 +14,17 @@ export default function GuestsPage() {
   const [showLinkModal, setShowLinkModal] = useState(false);
   const [newGuestLink, setNewGuestLink] = useState("");
   const [newGuestName, setNewGuestName] = useState("");
-  const [newGuestType, setNewGuestType] = useState<"both-receptions" | "wedding" | "wedding-reception" | "engagement">("both-receptions");
   const [copied, setCopied] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
-    inviteType: "both-receptions" as "both-receptions" | "wedding" | "wedding-reception" | "engagement"
   });
 
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<"all" | "pending" | "confirmed" | "declined">("all");
 
   const fetchGuests = async () => {
-    const snap = await getDocs(collection(db, "guests_jiya_jithin"));
+    const snap = await getDocs(collection(db, "guests_anish_revathi"));
     setGuests(snap.docs.map(d => ({ id: d.id, ...d.data() } as Guest)));
     setLoading(false);
   };
@@ -47,17 +45,17 @@ export default function GuestsPage() {
     let counter = 1;
 
     while (true) {
-      const q = query(collection(db, "guests_jiya_jithin"), where("slug", "==", slug));
+      const q = query(collection(db, "guests_anish_revathi"), where("slug", "==", slug));
       const snap = await getDocs(q);
       if (snap.empty) break;
       slug = `${baseSlug}-${counter}`;
       counter++;
     }
 
-    await addDoc(collection(db, "guests_jiya_jithin"), {
+    await addDoc(collection(db, "guests_anish_revathi"), {
       name: form.name.trim(),
       slug,
-      inviteType: form.inviteType,
+      inviteType: "wedding", // Fixed to wedding
       rsvpStatus: "pending",
       plusOne: false,
       mealPreference: "veg",
@@ -68,36 +66,24 @@ export default function GuestsPage() {
     const inviteUrl = `${window.location.origin}/${slug}`;
     setNewGuestLink(inviteUrl);
     setNewGuestName(form.name.trim());
-    setNewGuestType(form.inviteType);
     setShowLinkModal(true);
 
     // Reset form
     setShowModal(false);
-    setForm({ name: "", inviteType: "both-receptions" });
+    setForm({ name: "" });
     fetchGuests();
   };
 
   const copyToClipboard = async () => {
-    let dateStr = "18th & 20th August 2026";
-    let eventName = "our Engagement & Wedding";
-    if (newGuestType === "wedding") {
-      dateStr = "20th August 2026";
-      eventName = "our Wedding";
-    }
-    if (newGuestType === "engagement") {
-      dateStr = "18th August 2026";
-      eventName = "our Engagement";
-    }
-
     const textToCopy = `Dear ${newGuestName},
 
-We are delighted to invite you to celebrate ${eventName} with us on ${dateStr}.
+We are delighted to invite you to celebrate our Wedding with us on 30th August 2026.
 
 Your presence will truly make our day even more special. 
 ${newGuestLink}
 
 With Love,
-Jiya & Jithin`;
+Anish & Revathi`;
 
     try {
       await navigator.clipboard.writeText(textToCopy);
@@ -112,15 +98,15 @@ Jiya & Jithin`;
 
   const deleteGuest = async (id: string) => {
     if (!confirm("Are you sure you want to delete this guest?")) return;
-    await deleteDoc(doc(db, "guests_jiya_jithin", id));
+    await deleteDoc(doc(db, "guests_anish_revathi", id));
     toast.success("Guest removed");
     fetchGuests();
   };
 
   const exportCSV = () => {
     const rows = [
-      ["Name", "Invite Type", "URL Slug", "RSVP Status"],
-      ...guests.map(g => [g.name, g.inviteType || "both-receptions", g.slug, g.rsvpStatus]),
+      ["Name", "URL Slug", "RSVP Status"],
+      ...guests.map(g => [g.name, g.slug, g.rsvpStatus]),
     ];
     const csv = rows.map(r => r.join(",")).join("\n");
     const a = document.createElement("a");
@@ -180,16 +166,16 @@ Jiya & Jithin`;
         <table className="w-full text-sm">
           <thead className="border-b border-ink/10 bg-ink/5">
             <tr className="text-ink/60 text-left">
-              {["Name", "Invite URL", "Type", "Status", "Actions"].map((h) => (
+              {["Name", "Invite URL", "Status", "Actions"].map((h) => (
                 <th key={h} className="px-6 py-4 font-medium">{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={5} className="text-center py-16 text-ink/50">Loading guests...</td></tr>
+              <tr><td colSpan={4} className="text-center py-16 text-ink/50">Loading guests...</td></tr>
             ) : filteredGuests.length === 0 ? (
-              <tr><td colSpan={5} className="text-center py-16 text-ink/50">No guests found</td></tr>
+              <tr><td colSpan={4} className="text-center py-16 text-ink/50">No guests found</td></tr>
             ) : (
               filteredGuests.map((g) => (
                 <tr key={g.id} className="border-b border-ink/10 hover:bg-ink/5 transition-colors">
@@ -205,7 +191,6 @@ Jiya & Jithin`;
                       <LinkIcon size={13} className="group-hover:scale-110 transition" />
                     </a>
                   </td>
-                  <td className="px-6 py-4 text-ink/70 capitalize">{g.inviteType || "both-receptions"}</td>
                   <td className="px-6 py-4">
                     <span className={`px-3 py-1 rounded-full text-xs font-medium capitalize
                       ${g.rsvpStatus === "confirmed" ? "bg-green-100 text-green-700" :
@@ -245,17 +230,15 @@ Jiya & Jithin`;
                 value={form.name}
                 onChange={(e) => setForm(p => ({ ...p, name: e.target.value }))}
                 className="w-full bg-paper border border-ink/10 rounded-2xl px-5 py-3.5 focus:outline-none focus:border-gold"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    addGuest();
+                  }
+                }}
               />
-
-              <select
-                value={form.inviteType}
-                onChange={(e) => setForm(p => ({ ...p, inviteType: e.target.value as any }))}
-                className="w-full bg-paper border border-ink/10 rounded-2xl px-5 py-3.5 focus:outline-none focus:border-gold"
-              >
-                <option value="both-receptions">Both Events (Engagement & Wedding)</option>
-                <option value="wedding">Wedding Only</option>
-                <option value="engagement">Engagement Only</option>
-              </select>
+              <p className="text-xs text-ink/50 mt-1">
+                Guest will be invited to the Wedding on 30th August 2026
+              </p>
             </div>
 
             <div className="flex gap-3 mt-8">
@@ -273,9 +256,8 @@ Jiya & Jithin`;
               </button>
             </div>
           </motion.div>
-        </div >
-      )
-      }
+        </div>
+      )}
 
       {/* Personalized Invite Link Popup */}
       <AnimatePresence>
@@ -320,7 +302,6 @@ Jiya & Jithin`;
                     setShowLinkModal(false);
                     setNewGuestLink("");
                     setNewGuestName("");
-                    setNewGuestType("both-receptions");
                   }}
                   className="py-3 text-ink/70 hover:text-ink transition"
                 >
@@ -335,6 +316,6 @@ Jiya & Jithin`;
           </div>
         )}
       </AnimatePresence>
-    </div >
+    </div>
   );
 }

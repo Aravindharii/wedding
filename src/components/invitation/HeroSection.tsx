@@ -11,8 +11,8 @@ interface HeroSectionProps {
 
 export default function HeroSection({
   guestName,
-  desktopBg = "/bg_lavender.png",
-  inviteType = "both-receptions",
+  desktopBg = "/bg_floral.png",
+  inviteType = "wedding",
 }: HeroSectionProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const isWedding = inviteType === "wedding";
@@ -23,7 +23,7 @@ export default function HeroSection({
   // Preload the mobile portrait image
   useEffect(() => {
     const img = new Image();
-    img.src = "/bg_lavender.png";
+    img.src = "/bg_floral.png";
     img.onload = () => setImageLoaded(true);
   }, []);
 
@@ -33,11 +33,11 @@ export default function HeroSection({
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat lg:hidden transition-opacity duration-400"
         style={{
-          backgroundImage: "url('/bg_lavender.png')",
+          backgroundImage: "url('/bg_floral.png')",
           // ADJUST CUSTOM IMAGE SETTINGS BELOW:
-          transform: "scale(1.0)", // ZOOM: e.g., "scale(1.1)" for 10% zoom. (Using scale + bg-cover ensures no unfilled spaces)
-          filter: "blur(1px)",     // BLUR: e.g., "blur(2px)"
-          backgroundPosition: "47% 60%",   // FOCUS AREA: 100% Left-to-Right (Right side), 50% Top-to-Bottom (Center)
+          transform: "scale(1.0)", // ZOOM: e.g., "scale(1.1)" for 10% zoom.
+          filter: "blur(0px)",     // Keep clean center
+          backgroundPosition: "center",
         }}
       />
 
@@ -52,146 +52,139 @@ export default function HeroSection({
         }}
       />
 
-      {/* Light Overlay for Readability */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none bg-white/20"
-      />
+      {/* Delicate Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-rose-50/60 z-0 pointer-events-none" />
 
-      {/* Vignette Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-50/30 via-transparent to-purple-100/40 z-0 pointer-events-none" />
+      {/* Hanging Floral & Bell Garland Overlay */}
+      {imageLoaded && (
+        <div className="absolute top-0 left-0 w-full flex justify-between md:justify-around px-8 md:px-12 pointer-events-none z-20">
+          {[...Array(7)].map((_, i) => (
+            <motion.div
+              key={i}
+              initial={{ y: -100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.1 * i, duration: 1.5, type: "spring", bounce: 0.4 }}
+              className={`relative flex-col items-center ${i % 2 === 0 ? "h-[120px] md:h-[180px]" : "h-[90px] md:h-[140px]"} ${i === 0 || i === 6 ? 'hidden md:flex' : 'flex'} origin-top`}
+            >
+              <motion.div
+                animate={{ rotate: [-2, 2, -1.5, 1.5, -2] }}
+                transition={{ duration: 6 + (i % 3), repeat: Infinity, ease: "easeInOut" }}
+                className="flex flex-col items-center h-full origin-top"
+              >
+                {/* The string */}
+                <div className="w-[1.5px] h-full bg-gradient-to-b from-amber-300 via-rose-300 to-amber-500 opacity-80" />
 
-      {/* Loading State Overlay */}
-      {!imageLoaded && (
-        <div className="absolute inset-0 bg-white/80 z-10 flex items-center justify-center">
-          <div className="w-8 h-8 border-2 border-purple-300 border-t-purple-600 rounded-full animate-spin" />
+                {/* Marigold/Flower knots */}
+                <div className="absolute top-[20%] w-2.5 h-2.5 rounded-full bg-gradient-to-br from-orange-300 to-orange-500 shadow-[0_0_8px_rgba(251,146,60,0.4)]" />
+                <div className="absolute top-[50%] w-3 h-3 rounded-full bg-gradient-to-br from-rose-300 to-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.4)]" />
+                <div className="absolute top-[80%] w-2 h-2 rounded-full bg-gradient-to-br from-amber-300 to-amber-500 shadow-[0_0_8px_rgba(251,191,36,0.4)]" />
+
+                {/* Golden Bell at bottom */}
+                <svg width="28" height="28" viewBox="0 0 24 24" className="absolute -bottom-4 text-amber-500 fill-current drop-shadow-[0_4px_6px_rgba(212,175,55,0.5)]">
+                  <path d="M12 2C13.1046 2 14 2.89543 14 4V4.5C17.3137 4.5 20 7.18629 20 10.5V17L22 19V20H2V19L4 17V10.5C4 7.18629 6.68629 4.5 10 4.5V4C10 2.89543 10.8954 2 12 2ZM12 22C10.8954 22 10 21.1046 10 20H14C14 21.1046 13.1046 22 12 22Z" />
+                </svg>
+              </motion.div>
+            </motion.div>
+          ))}
         </div>
       )}
 
-      {/* Main Content - Only fully visible after image loads */}
+      {/* Loading State Overlay */}
+      {!imageLoaded && (
+        <div className="absolute inset-0 bg-white/95 z-10 flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-rose-300 border-t-rose-600 rounded-full animate-spin" />
+        </div>
+      )}
+
+      {/* Main Content */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: imageLoaded ? 1 : 0.85 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative z-10 w-[92%] md:w-full max-w-3xl mx-auto text-center px-4 md:px-12 py-8 md:py-12 flex flex-col items-center bg-white/70 backdrop-blur-md rounded-[2.5rem] md:rounded-[3rem] my-12 shadow-2xl shadow-purple-900/10 border border-white/50"
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: imageLoaded ? 1 : 0.85, scale: imageLoaded ? 1 : 0.98 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="relative z-10 w-[92%] md:w-full max-w-3xl mx-auto text-center px-4 md:px-12 py-10 md:py-16 flex flex-col items-center bg-white/60 backdrop-blur-md rounded-[2.5rem] md:rounded-[3rem] my-12 shadow-[0_8px_32px_rgba(194,24,91,0.05)] border border-white/80"
       >
         <div className="py-4 flex flex-col items-center justify-center w-full">
-          <p className="text-purple-800 text-xs md:text-sm tracking-[0.2em] uppercase mb-8 font-bold leading-relaxed">
-            Together with their families,<br />you are joyfully invited to the<br />
-            {isBoth && "Engagement & Wedding of"}
-            {isEngagement && "Engagement of"}
-            {isWedding && "Wedding of"}
-          </p>
-          <h1 className="font-['var(--font-cursive)',serif] text-7xl sm:text-8xl md:text-9xl text-purple-950 font-normal tracking-wide drop-shadow-sm">
-            Jiya
-          </h1>
-          <p className="text-purple-900/80 text-xs md:text-sm tracking-wide mt-3 mb-2 font-semibold">
-            D/o Mr. Thomaskutty P C & Mrs. Lissy Thomas
-          </p>
-          <span className="font-serif text-3xl md:text-5xl text-amber-600/80 italic my-4 font-light">
+          <motion.p
+            initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.8 }}
+            className="text-rose-800 text-xs md:text-sm tracking-[0.2em] uppercase mb-8 font-semibold leading-relaxed"
+          >
+            || Sri Ganeshaya Namaha ||<br /><br />
+            Cordially invite you and your family on<br />the auspicious occasion of the wedding ceremony of our Elder Son
+          </motion.p>
+          <motion.h1
+            initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.7, duration: 1, type: "spring" }}
+            className="font-['var(--font-cursive)',serif] text-[13vw] sm:text-[10vw] md:text-8xl lg:text-9xl text-rose-900 font-normal tracking-wide drop-shadow-sm whitespace-nowrap"
+          >
+            Anish. S
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}
+            className="text-rose-800/90 text-xs md:text-sm tracking-wide mt-3 mb-2 font-medium uppercase"
+          >
+            S/o Late Smt. R. Roopavathi & Late Sri P. P. Sekhar
+          </motion.p>
+          <motion.span
+            initial={{ opacity: 0, rotate: -45 }} animate={{ opacity: 1, rotate: 0 }} transition={{ delay: 1.1, type: "spring" }}
+            className="font-serif text-3xl md:text-5xl text-rose-400 italic my-6 font-light"
+          >
             &amp;
-          </span>
-          <h1 className="font-['var(--font-cursive)',serif] text-7xl sm:text-8xl md:text-9xl text-purple-950 font-normal tracking-wide drop-shadow-sm">
-            Jithin
-          </h1>
-          <p className="text-purple-900/80 text-xs md:text-sm tracking-wide mt-3 font-semibold">
-            S/o Mr. John Ghee Varghese & Mrs. Gracy Varghese
-          </p>
+          </motion.span>
+          <motion.h1
+            initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 1.3, duration: 1, type: "spring" }}
+            className="font-['var(--font-cursive)',serif] text-[13vw] sm:text-[10vw] md:text-8xl lg:text-9xl text-rose-900 font-normal tracking-wide drop-shadow-sm whitespace-nowrap"
+          >
+            Revathi. J
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
+            className="text-rose-800/90 text-xs md:text-sm tracking-wide mt-3 font-medium uppercase leading-relaxed"
+          >
+            D/o Smt. Vidyalatha & Sri. Jaykumar. P<br />Medarahalli, Bangalore.
+          </motion.p>
         </div>
 
         {/* Guest Name Section */}
         {guestName && (
-          <div className="mt-8 md:mt-10 w-full max-w-sm mx-auto text-center relative">
-            <div className="h-[1px] w-24 mx-auto mb-6 bg-gradient-to-r from-transparent via-purple-300 to-transparent opacity-60" />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.7 }}
+            className="mt-8 md:mt-10 w-full max-w-sm mx-auto text-center relative"
+          >
+            <div className="h-[1px] w-24 mx-auto mb-6 bg-gradient-to-r from-transparent via-rose-300 to-transparent opacity-60" />
 
             <p
-              className="font-serif text-3xl md:text-4xl italic tracking-wide text-purple-900 font-semibold"
+              className="font-serif text-3xl md:text-4xl italic tracking-wide text-rose-950 drop-shadow-sm font-semibold"
             >
               {guestName}
             </p>
 
-            <p className="mt-4 text-purple-800/90 font-medium text-base md:text-lg">
+            <p className="mt-4 text-rose-700/90 font-medium text-base md:text-lg">
               You are specially invited
             </p>
 
-            <div className="mt-6 h-[1px] w-24 mx-auto bg-gradient-to-r from-transparent via-purple-300 to-transparent opacity-60" />
-            <div className="absolute inset-0 bg-purple-200/20 blur-3xl rounded-full -z-10" />
-          </div>
+            <div className="mt-6 h-[1px] w-24 mx-auto bg-gradient-to-r from-transparent via-rose-300 to-transparent opacity-60" />
+            <div className="absolute inset-0 bg-rose-100/50 blur-3xl rounded-full -z-10" />
+          </motion.div>
         )}
 
         {/* Decorative Divider */}
-        <div className="flex items-center justify-center gap-1 my-8 md:my-10">
-          <span className="text-purple-300 text-[10px]">◈</span>
-          <span className="text-amber-500 text-xs">◈</span>
-          <span className="text-purple-300 text-[10px]">◈</span>
+        <div className="flex items-center justify-center gap-1 my-8 md:my-10 opacity-70">
+          <span className="text-rose-300 text-[10px]">◈</span>
+          <span className="text-rose-400 text-xs animate-pulse">◈</span>
+          <span className="text-rose-300 text-[10px]">◈</span>
         </div>
 
         {/* Date and Time */}
         <div className="mb-8 w-full flex flex-col items-center">
-          <p className="text-purple-900 text-xs md:text-sm tracking-[0.2em] uppercase mb-10 font-bold text-center">
+          <p className="text-rose-900 text-xs md:text-sm tracking-[0.2em] uppercase mb-10 font-bold text-center leading-loose">
             We invite you to celebrate our love<br />and the beautiful beginning<br />of our forever together
           </p>
 
-          <div className="flex flex-col gap-12 w-full max-w-lg items-center justify-center relative">
-            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-purple-300 via-amber-300 to-purple-300 -translate-x-1/2 hidden md:block opacity-50" />
-
-            {/* Engagement */}
-            {(isBoth || isEngagement) && (
-              <div className="bg-white/80 backdrop-blur-md border border-purple-200 rounded-3xl p-6 md:p-8 w-full shadow-lg shadow-purple-900/5 relative z-10 flex flex-col items-center">
-                <p className="text-purple-800 text-xs tracking-widest uppercase mb-6 font-black">Engagement</p>
-                <div className="flex items-center justify-center gap-4 md:gap-10">
-                  <div className="text-right">
-                    <p className="text-purple-950 text-sm md:text-base tracking-widest uppercase mb-1 font-bold">Tuesday</p>
-                    <p className="text-purple-900 text-xs md:text-sm tracking-widest uppercase font-bold">AUG</p>
-                  </div>
-                  <div className="w-[1px] h-12 bg-purple-300" />
-                  <div className="text-6xl text-purple-950 font-light font-serif tracking-tight drop-shadow-sm">18</div>
-                  <div className="w-[1px] h-12 bg-purple-300" />
-                  <div className="text-left">
-                    <p className="text-purple-950 text-sm md:text-base tracking-widest mb-1 font-bold">2026</p>
-                    <p className="text-purple-900 text-xs md:text-sm tracking-widest uppercase font-bold">11:00 AM</p>
-                  </div>
-                </div>
-                <div className="mt-8 pt-6 border-t border-purple-200/50 w-full flex flex-col items-center">
-                  <p className="text-purple-950 text-lg md:text-xl font-serif mb-2 font-semibold">Bethel Hall</p>
-                  <p className="text-purple-800 text-xs md:text-sm font-medium leading-relaxed text-center">
-                    St Mary's Church, Thessery,<br />Perambra P.O, 680689, Chalakudy.
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {/* Wedding */}
-            {(isBoth || isWedding) && (
-              <div className="bg-white/80 backdrop-blur-md border border-purple-200 rounded-3xl p-6 md:p-8 w-full shadow-lg shadow-amber-900/5 relative z-10 flex flex-col items-center">
-                <p className="text-purple-800 text-xs tracking-widest uppercase mb-6 font-black italic">By the grace of God will be solemnized,<br />Our Marriage on</p>
-                <div className="flex items-center justify-center gap-4 md:gap-10">
-                  <div className="text-right">
-                    <p className="text-amber-700 text-sm md:text-base tracking-widest uppercase mb-1 font-bold">Thursday</p>
-                    <p className="text-amber-600 text-xs md:text-sm tracking-widest uppercase font-bold">AUG</p>
-                  </div>
-                  <div className="w-[1px] h-12 bg-amber-300" />
-                  <div className="text-6xl text-amber-600 font-light font-serif tracking-tight drop-shadow-sm">20</div>
-                  <div className="w-[1px] h-12 bg-amber-300" />
-                  <div className="text-left">
-                    <p className="text-amber-700 text-sm md:text-base tracking-widest mb-1 font-bold">2026</p>
-                    <p className="text-amber-600 text-xs md:text-sm tracking-widest uppercase font-bold">10:30 AM</p>
-                  </div>
-                </div>
-                <div className="mt-8 pt-6 border-t border-amber-200/50 w-full flex flex-col items-center">
-                  <p className="text-amber-800 text-lg md:text-xl font-serif mb-2 font-semibold">The CSI Convention Centre</p>
-                  <p className="text-amber-700/80 text-xs md:text-sm font-medium leading-relaxed text-center">
-                    Q S Road, Chinnakkada,<br />Kollam.
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
         </div>
 
-        <div className="my-8 text-center text-purple-800/80 text-xs md:text-sm font-medium italic">
-          Best Compliments from<br />Jeena & Family, Jissa & Family
+        <div className="my-8 text-center text-rose-800/70 text-xs md:text-sm font-medium italic">
+          Blessings from<br />Smt S. Manjula and Sri S. Shashikumar<br />Prakashnagar, Bengaluru
         </div>
-      </motion.div>
-    </section>
+      </motion.div >
+    </section >
   );
 }

@@ -21,13 +21,13 @@ export default function Footer() {
         className="relative z-10 max-w-3xl mx-auto px-4"
       >
         <div className="font-serif text-4xl md:text-5xl text-ink mb-8 tracking-wide drop-shadow-sm group-hover:scale-105 transition-transform duration-700">
-          <span className="text-gradient font-semibold">Jiya</span> <span className="text-gold italic mx-2 drop-shadow-md group-hover:rotate-12 inline-block transition-transform duration-500">&amp;</span> <span className="text-gradient font-semibold">Jithin</span>
+          <span className="text-gradient font-semibold">Anish</span> <span className="text-gold italic mx-2 drop-shadow-md group-hover:rotate-12 inline-block transition-transform duration-500">&amp;</span> <span className="text-gradient font-semibold">Revathi</span>
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-8 text-ink/70 mb-12 tracking-[0.25em] uppercase text-[10px] md:text-xs font-semibold">
-          <span>April 28 &amp; 30, 2026</span>
+          <span>August 30, 2026</span>
           <span className="hidden md:inline-block w-[3px] h-[3px] rounded-full bg-mist" />
-          <span>Kerala, India</span>
+          <span>Bangalore, India</span>
         </div>
 
         <div className="border-t border-mist/30 pt-10">
