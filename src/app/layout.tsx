@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter, Great_Vibes } from "next/font/google";
 import { Toaster } from "sonner";
+import BackgroundAudio from "@/components/BackgroundAudio";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -39,6 +40,7 @@ export default function RootLayout({
       className={`${playfair.variable} ${inter.variable} ${greatVibes.variable}`}
     >
       <body className="min-h-screen bg-paper text-ink font-sans antialiased">
+        <BackgroundAudio />
         {children}
         <Toaster richColors position="top-right" />
       </body>
