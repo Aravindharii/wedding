@@ -121,7 +121,7 @@ export default function HeroSection({
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}
             className="text-rose-800/90 text-xs md:text-sm tracking-wide mt-3 mb-2 font-medium uppercase"
           >
-            S/o Late Smt. R. Roopavathi & Late Sri P. P. Sekhar
+            S/o  S Manjula and S.Shashikumar
           </motion.p>
           <motion.span
             initial={{ opacity: 0, rotate: -45 }} animate={{ opacity: 1, rotate: 0 }} transition={{ delay: 1.1, type: "spring" }}
@@ -182,7 +182,7 @@ export default function HeroSection({
         </div>
 
         <div className="my-8 text-center text-rose-800/70 text-xs md:text-sm font-medium italic">
-          Blessings from<br />Smt S. Manjula and Sri S. Shashikumar<br />Prakashnagar, Bengaluru
+          Blessings from<br />Friends and family<br />
         </div>
       </motion.div >
     </section >
