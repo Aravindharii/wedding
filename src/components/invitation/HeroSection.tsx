@@ -121,7 +121,7 @@ export default function HeroSection({
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}
             className="text-rose-800/90 text-xs md:text-sm tracking-wide mt-3 mb-2 font-medium uppercase"
           >
-            S/o  S Manjula and S.Shashikumar
+            S/o Smt S Manjula and Sri S.Shashikumar
           </motion.p>
           <motion.span
             initial={{ opacity: 0, rotate: -45 }} animate={{ opacity: 1, rotate: 0 }} transition={{ delay: 1.1, type: "spring" }}
