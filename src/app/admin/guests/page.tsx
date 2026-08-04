@@ -26,7 +26,7 @@ export default function GuestsPage() {
   const [filter, setFilter] = useState<"all" | "pending" | "confirmed" | "declined">("all");
 
   const fetchGuests = async () => {
-    const snap = await getDocs(collection(db, "guests_jiya_jithin"));
+    const snap = await getDocs(collection(db, "guests_shahabas_zaira"));
     setGuests(snap.docs.map(d => ({ id: d.id, ...d.data() } as Guest)));
     setLoading(false);
   };
@@ -47,14 +47,14 @@ export default function GuestsPage() {
     let counter = 1;
 
     while (true) {
-      const q = query(collection(db, "guests_jiya_jithin"), where("slug", "==", slug));
+      const q = query(collection(db, "guests_shahabas_zaira"), where("slug", "==", slug));
       const snap = await getDocs(q);
       if (snap.empty) break;
       slug = `${baseSlug}-${counter}`;
       counter++;
     }
 
-    await addDoc(collection(db, "guests_jiya_jithin"), {
+    await addDoc(collection(db, "guests_shahabas_zaira"), {
       name: form.name.trim(),
       slug,
       inviteType: form.inviteType,
@@ -78,26 +78,26 @@ export default function GuestsPage() {
   };
 
   const copyToClipboard = async () => {
-    let dateStr = "18th & 20th August 2026";
-    let eventName = "our Engagement & Wedding";
+    let dateStr = "9th August 2026";
+    let eventName = "our Nikah & Wedding Reception";
     if (newGuestType === "wedding") {
-      dateStr = "20th August 2026";
-      eventName = "our Wedding";
+      dateStr = "9th August 2026";
+      eventName = "our Nikah";
     }
-    if (newGuestType === "engagement") {
-      dateStr = "18th August 2026";
-      eventName = "our Engagement";
+    if (newGuestType === "wedding-reception") {
+      dateStr = "9th August 2026";
+      eventName = "our Wedding Reception";
     }
 
     const textToCopy = `Dear ${newGuestName},
 
 We are delighted to invite you to celebrate ${eventName} with us on ${dateStr}.
 
-Your presence will truly make our day even more special. 
+Your presence will truly make our day even more special.
 ${newGuestLink}
 
-With Love,
-Jiya & Jithin`;
+With Best Compliments,
+Nazeer P.H., Shahafan Shamsudheen & Shaheen Shamsudheen`;
 
     try {
       await navigator.clipboard.writeText(textToCopy);
@@ -112,7 +112,7 @@ Jiya & Jithin`;
 
   const deleteGuest = async (id: string) => {
     if (!confirm("Are you sure you want to delete this guest?")) return;
-    await deleteDoc(doc(db, "guests_jiya_jithin", id));
+    await deleteDoc(doc(db, "guests_shahabas_zaira", id));
     toast.success("Guest removed");
     fetchGuests();
   };
@@ -252,9 +252,8 @@ Jiya & Jithin`;
                 onChange={(e) => setForm(p => ({ ...p, inviteType: e.target.value as any }))}
                 className="w-full bg-paper border border-ink/10 rounded-2xl px-5 py-3.5 focus:outline-none focus:border-gold"
               >
-                <option value="both-receptions">Both Events (Engagement & Wedding)</option>
-                <option value="wedding">Wedding Only</option>
-                <option value="engagement">Engagement Only</option>
+                <option value="wedding-reception">Both Events (Nikah &amp; Wedding Reception)</option>
+                <option value="wedding">Nikah Only</option>
               </select>
             </div>
 

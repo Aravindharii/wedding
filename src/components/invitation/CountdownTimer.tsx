@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-const MARRIAGE_DATE = new Date("2026-08-20T10:30:00+05:30");
-const ENGAGEMENT_DATE = new Date("2026-08-18T11:00:00+05:30");
+const RECEPTION_DATE = new Date("2026-08-09T18:30:00+05:30");
+const NIKAH_DATE = new Date("2026-08-09T11:30:00+05:30");
 
 function getTimeLeft(targetDate: Date) {
   const diff = targetDate.getTime() - Date.now();
@@ -22,17 +22,18 @@ interface CountdownTimerProps {
 }
 
 export default function CountdownTimer({
-  desktopBg = "/bg_lavender.png",
-  inviteType = "both-receptions",
+  desktopBg = "/bg_islamic.png",
+  inviteType = "wedding-reception",
 }: CountdownTimerProps) {
   const [time, setTime] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [mounted, setMounted] = useState(false);
 
-  let targetDate = MARRIAGE_DATE;
-  if (inviteType === "engagement") {
-    targetDate = ENGAGEMENT_DATE;
-  } else if (inviteType === "both-receptions" || !inviteType) {
-    targetDate = ENGAGEMENT_DATE.getTime() > Date.now() ? ENGAGEMENT_DATE : MARRIAGE_DATE;
+  let targetDate = RECEPTION_DATE;
+  if (inviteType === "wedding") {
+    targetDate = NIKAH_DATE;
+  } else {
+    // Count down to whichever is sooner and hasn't passed
+    targetDate = NIKAH_DATE.getTime() > Date.now() ? NIKAH_DATE : RECEPTION_DATE;
   }
 
   useEffect(() => {
@@ -42,20 +43,20 @@ export default function CountdownTimer({
     return () => clearInterval(interval);
   }, [inviteType]);
 
-  if (!mounted) return <section className="py-32 bg-purple-50" />;
+  if (!mounted) return <section className="py-32 bg-teal-50" />;
 
   return (
-    <section className="relative py-32 overflow-hidden text-purple-950 min-h-[600px] flex items-center justify-center">
+    <section className="relative py-32 overflow-hidden text-teal-950 min-h-[600px] flex items-center justify-center">
       {/* Mobile Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat lg:hidden"
-        style={{ backgroundImage: "url('/bg_lavender.png')", filter: "blur(1px) hue-rotate(280deg)", transform: "scale(1.05)" }}
+        style={{ backgroundImage: "url('/bg_islamic.png')", filter: "blur(1px)", transform: "scale(1.05)" }}
       />
 
       {/* Desktop Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden lg:block"
-        style={{ backgroundImage: `url('${desktopBg}')`, filter: "blur(2px) hue-rotate(280deg)", transform: "scale(1.05)" }}
+        style={{ backgroundImage: `url('${desktopBg}')`, filter: "blur(2px)", transform: "scale(1.05)" }}
       />
 
       {/* Light Overlay */}
@@ -75,10 +76,10 @@ export default function CountdownTimer({
           whileInView={{ opacity: 1, y: 0 }}
           className="mb-12 md:mb-16 inline-flex flex-col items-center bg-white/70 backdrop-blur-md py-4 md:py-5 px-6 md:px-10 rounded-full shadow-lg border border-white/50"
         >
-          <p className="text-purple-800 tracking-[0.4em] text-xs md:text-sm uppercase font-bold">
-            Counting Down To The Big Day
+          <p className="text-teal-800 tracking-[0.4em] text-xs md:text-sm uppercase font-bold">
+            Counting Down To The Blessed Day
           </p>
-          <div className="h-px w-24 bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto mt-6" />
+          <div className="h-px w-24 bg-gradient-to-r from-transparent via-teal-400 to-transparent mx-auto mt-6" />
         </motion.div>
 
         {/* Timer Cards */}
@@ -93,19 +94,19 @@ export default function CountdownTimer({
               className="relative group"
             >
               <div className="relative flex flex-col items-center justify-center w-28 h-32 md:w-36 md:h-44
-                              bg-white/60 backdrop-blur-md border border-purple-200
-                              hover:border-purple-400 rounded-3xl overflow-hidden transition-all shadow-lg shadow-purple-900/10">
+                              bg-white/60 backdrop-blur-md border border-teal-200
+                              hover:border-teal-400 rounded-3xl overflow-hidden transition-all shadow-lg shadow-teal-900/10">
 
                 <motion.span
                   key={val}
                   initial={{ y: -12, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  className="font-serif text-6xl md:text-7xl font-semibold tabular-nums text-purple-950 tracking-tighter drop-shadow-sm"
+                  className="font-serif text-6xl md:text-7xl font-semibold tabular-nums text-teal-950 tracking-tighter drop-shadow-sm"
                 >
                   {String(val).padStart(2, "0")}
                 </motion.span>
 
-                <span className="text-purple-700 text-xs md:text-sm uppercase tracking-[0.25em] mt-3 font-bold">
+                <span className="text-teal-700 text-xs md:text-sm uppercase tracking-[0.25em] mt-3 font-bold">
                   {label}
                 </span>
               </div>

@@ -23,16 +23,16 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://jiyajithin.netlify.app"),
+  metadataBase: new URL("https://shahabaszaira.netlify.app"),
 
-  title: "Jiya & Jithin —  Invitation",
-  description: "You are cordially invited to celebrate our journey to forever together.",
+  title: "Shahabas & Zaira — Wedding Invitation",
+  description: "You are cordially invited to celebrate the wedding of Shahabas Shamsudheen & Zaira Zainudheen.",
 
   openGraph: {
-    title: "Jiya & Jithin —  Invitation",
-    description: "You are cordially invited to celebrate our journey to forever together.",
-    url: "https://jiyajithin.netlify.app",
-    siteName: "Jiya & Jithin Invitation",
+    title: "Shahabas & Zaira — Wedding Invitation",
+    description: "You are cordially invited to celebrate the wedding of Shahabas Shamsudheen & Zaira Zainudheen.",
+    url: "https://shahabaszaira.netlify.app",
+    siteName: "Shahabas & Zaira Wedding Invitation",
     locale: "en_US",
     type: "website",
     images: [
@@ -40,15 +40,15 @@ export const metadata: Metadata = {
         url: "/preview.jpg",
         width: 1200,
         height: 630,
-        alt: "Jiya & Jithin  Invitation",
+        alt: "Shahabas & Zaira Wedding Invitation",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Jiya & Jithin — Wedding Invitation",
-    description: "You are cordially invited to celebrate our journey to forever together",
+    title: "Shahabas & Zaira — Wedding Invitation",
+    description: "You are cordially invited to celebrate the wedding of Shahabas Shamsudheen & Zaira Zainudheen.",
     images: ["/preview.jpg"],
   },
 

@@ -6,9 +6,9 @@ import RSVPForm from "@/components/invitation/RSVPForm";
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <HeroSection inviteType="both-receptions" />
-      <Timeline inviteType="both-receptions" />
-      <CountdownTimer inviteType="both-receptions" />
+      <HeroSection inviteType="wedding-reception" />
+      <Timeline inviteType="wedding-reception" />
+      <CountdownTimer inviteType="wedding-reception" />
 
       {/* <RSVPForm /> */}
     </main>

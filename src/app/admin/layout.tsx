@@ -25,15 +25,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   return (
-    <div className="relative flex min-h-screen bg-paper text-purple-950">
+    <div className="relative flex min-h-screen bg-paper text-teal-950">
       <div className="absolute inset-0 bg-grid-soft opacity-[0.10]" />
 
       {/* Mobile Top Bar */}
-      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-xl border-b border-purple-100 flex items-center justify-between px-4 z-40">
+      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-xl border-b border-teal-100 flex items-center justify-between px-4 z-40">
         <div>
-          <p className="font-serif text-purple-950 text-lg font-semibold">Jiya &amp; Jithin</p>
+          <p className="font-serif text-teal-950 text-lg font-semibold">Shahabas &amp; Zaira</p>
         </div>
-        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 text-purple-900/70 hover:text-purple-950">
+        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 text-teal-900/70 hover:text-teal-950">
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
@@ -53,15 +53,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       {/* Sidebar */}
       <aside className={`
-        fixed md:sticky top-0 h-screen z-50 w-64 bg-white/95 backdrop-blur-2xl border-r border-purple-100 flex flex-col py-8 px-4 shadow-2xl shadow-purple-900/5 transition-transform duration-300 ease-in-out
+        fixed md:sticky top-0 h-screen z-50 w-64 bg-white/95 backdrop-blur-2xl border-r border-teal-100 flex flex-col py-8 px-4 shadow-2xl shadow-teal-900/5 transition-transform duration-300 ease-in-out
         ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0
       `}>
         <div className="mb-10 px-2 flex justify-between items-start">
           <div>
-            <p className="font-serif text-purple-950 text-xl font-semibold">Jiya &amp; Jithin</p>
-            <p className="text-purple-800/50 text-xs mt-1 tracking-widest uppercase font-bold">Admin Panel</p>
+            <p className="font-serif text-teal-950 text-xl font-semibold">Shahabas &amp; Zaira</p>
+            <p className="text-teal-800/50 text-xs mt-1 tracking-widest uppercase font-bold">Admin Panel</p>
           </div>
-          <button onClick={closeMobileMenu} className="md:hidden p-1 text-purple-900/50 hover:text-purple-950 -mr-2">
+          <button onClick={closeMobileMenu} className="md:hidden p-1 text-teal-900/50 hover:text-teal-950 -mr-2">
             <X size={20} />
           </button>
         </div>
@@ -70,15 +70,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Link key={href} href={href} onClick={closeMobileMenu}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all font-medium
                 ${pathname === href
-                  ? "bg-purple-600 text-white shadow-lg"
-                  : "text-purple-900/60 hover:text-purple-950 hover:bg-purple-50"}`}>
+                  ? "bg-teal-600 text-white shadow-lg"
+                  : "text-teal-900/60 hover:text-teal-950 hover:bg-teal-50"}`}>
               <Icon size={18} />
               {label}
             </Link>
           ))}
         </nav>
         <button onClick={logout}
-          className="flex items-center gap-3 px-4 py-3 text-purple-900/50 hover:text-red-500 text-sm transition-colors mt-auto w-full text-left font-medium">
+          className="flex items-center gap-3 px-4 py-3 text-teal-900/50 hover:text-red-500 text-sm transition-colors mt-auto w-full text-left font-medium">
           <LogOut size={18} /> Logout
         </button>
       </aside>

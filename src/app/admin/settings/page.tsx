@@ -6,11 +6,11 @@ import { db } from "@/lib/firebase";
 
 export default function SettingsPage() {
   const [config, setConfig] = useState({
-    coupleNames: "Jiya Jithin",
-    weddingDate: "2026-04-12",
-    venue: "The Grand Ballroom, Kochi",
-    venueMapUrl: "https://maps.google.com",
-    story: "We met under the stars and fell in love...",
+    coupleNames: "Shahabas & Zaira",
+    weddingDate: "2026-08-09",
+    venue: "Nettoor Mahallu Auditorium, Nettoor",
+    venueMapUrl: "https://maps.google.com/?q=Nettoor+Mahallu+Auditorium",
+    story: "Alhamdulillah, united in faith and love...",
   });
 
   const save = async () => {

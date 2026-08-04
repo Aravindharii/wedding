@@ -35,7 +35,7 @@ export default function GuestInvitePage() {
       };
     }
 
-    getDocs(query(collection(db, "guests_jiya_jithin"), where("slug", "==", slug)))
+    getDocs(query(collection(db, "guests_shahabas_zaira"), where("slug", "==", slug)))
       .then((snap) => {
         if (cancelled) return;
         if (snap.empty) { setNotFound(true); return; }

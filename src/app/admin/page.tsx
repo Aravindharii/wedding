@@ -13,7 +13,7 @@ export default function Dashboard() {
   const [guests, setGuests] = useState<Guest[]>([]);
 
   useEffect(() => {
-    getDocs(collection(db, "guests_jiya_jithin")).then(snap =>
+    getDocs(collection(db, "guests_shahabas_zaira")).then(snap =>
       setGuests(snap.docs.map(d => ({ id: d.id, ...d.data() } as Guest)))
     );
   }, []);
